@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const API_URL = import.meta.env.VITE_API_URL || "https://api.hospitalityhackathon.et";
+const API_URL = import.meta.env.VITE_API_URL || "https://alx-hackathon-api.bisrojc60.workers.dev";
 
 const Registration = () => {
   const [registrationType, setRegistrationType] = useState("team");

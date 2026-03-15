@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://api.hospitalityhackathon.et';
+const API_URL = import.meta.env.VITE_API_URL || 'https://alx-hackathon-api.bisrojc60.workers.dev';
 
 const CheckIn = () => {
   const [registrationDetails, setRegistrationDetails] = useState(null);
