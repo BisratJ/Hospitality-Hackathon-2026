@@ -116,7 +116,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════════ */}
       {/* HERO — Dark premium with red accents                        */}
       {/* ═══════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden min-h-[82vh] flex items-center -mt-[56px] pt-[56px] lg:-mt-[72px] lg:pt-[72px]" style={{ background: darkSection }}>
+      <section className="relative overflow-hidden min-h-[82vh] flex items-center -mt-[56px] pt-[56px] nav:-mt-[72px] nav:pt-[72px]" style={{ background: darkSection }}>
 
         {/* Subtle cross pattern */}
         <div className="absolute inset-0 z-0 opacity-[0.04]" style={{

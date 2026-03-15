@@ -192,7 +192,7 @@ export default function AboutUs() {
   return (
     <div className="flex min-h-screen max-w-full flex-col bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32 -mt-[56px] pt-[56px] lg:-mt-[72px] lg:pt-[72px]" style={{
+      <section className="relative overflow-hidden py-20 md:py-32 -mt-[56px] pt-[56px] nav:-mt-[72px] nav:pt-[72px]" style={{
         background: "linear-gradient(135deg, #0a0a0a 0%, #171717 35%, #1a1a1a 70%, #111111 100%)"
       }}>
         {/* Subtle red accent orb */}

@@ -13,6 +13,7 @@ import {
   MapPin,
   ChevronLeft,
   X,
+  Newspaper,
 } from "lucide-react"
 
 const RED = "#DC2626"
@@ -52,6 +53,21 @@ const galleryItems = [
   { id: 18, category: "videos", title: "Day 2 & Awards", description: "Pitches, judging, and the awards ceremony", aspect: "landscape", videoUrl: "https://www.youtube.com/embed/9ueIV8B1NlU" },
 ]
 
+const featuredArticles = [
+  {
+    title: "A New Era for African Hospitality Innovation — Hospitality Hackathon Recap",
+    source: "What's Out Addis",
+    excerpt: "An in-depth recap of the inaugural Hospitality Hackathon and what it means for the future of African hospitality innovation.",
+    url: "https://www.whatsoutaddis.com/a-new-era-for-african-hospitality-innovation-hospitality-hackathon-recap/",
+  },
+  {
+    title: "Hospitality Meets Tech: Ethiopia's First Hospitality Hackathon Held at Kuriftu and ALX",
+    source: "Loline Magazine",
+    excerpt: "The two-day event saw 350+ innovators, entrepreneurs, and curious minds gathered to solve real problems in the hospitality industry.",
+    url: "https://www.lolinemag.com/articles/hospitality-meets-tech-ethiopias-first-hospitality-hackathon-held-at-kuriftu-and-alx",
+  },
+]
+
 export default function Gallery() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [activeFilter, setActiveFilter] = useState("all")
@@ -78,7 +94,7 @@ export default function Gallery() {
     <div className={`bg-neutral-50 min-h-screen transition-opacity duration-500 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
 
       {/* Hero */}
-      <section className="relative overflow-hidden -mt-[56px] pt-[56px] lg:-mt-[72px] lg:pt-[72px]" style={{ background: darkSection }}>
+      <section className="relative overflow-hidden -mt-[56px] pt-[56px] nav:-mt-[72px] nav:pt-[72px]" style={{ background: darkSection }}>
         <div className="absolute inset-0 opacity-[0.04]" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}></div>
@@ -211,6 +227,50 @@ export default function Gallery() {
           </div>
         </div>
       )}
+
+      {/* Featured Articles / Press Coverage */}
+      <section className="py-16 bg-neutral-50 border-t border-neutral-100">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900 text-white text-xs font-medium mb-4">
+                <Newspaper className="h-3.5 w-3.5" />
+                Press Coverage
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-2">Featured In</h2>
+              <p className="text-neutral-500 text-sm max-w-xl mx-auto">
+                Read what the media had to say about Ethiopia's first Hospitality Hackathon.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {featuredArticles.map((article, i) => (
+                <a
+                  key={i}
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${glassCard} group p-6 flex flex-col justify-between`}
+                >
+                  <div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Newspaper className="h-4 w-4 text-red-500 flex-shrink-0" />
+                      <span className="text-xs font-semibold uppercase tracking-wide text-red-600">{article.source}</span>
+                    </div>
+                    <h3 className="text-base font-semibold text-neutral-900 mb-2 leading-snug group-hover:text-red-600 transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-sm text-neutral-500 leading-relaxed">{article.excerpt}</p>
+                  </div>
+                  <div className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-red-600 group-hover:gap-2 transition-all">
+                    Read article
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="relative py-20 overflow-hidden" style={{ background: darkSection }}>

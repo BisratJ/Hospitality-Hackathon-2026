@@ -76,7 +76,7 @@ const CheckIn = () => {
 
   return (
     <div
-      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 -mt-[56px] pt-[56px] lg:-mt-[72px] lg:pt-[72px]"
+      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 -mt-[56px] pt-[56px] nav:-mt-[72px] nav:pt-[72px]"
       style={{
         background: 'linear-gradient(135deg, #0a0a0a 0%, #171717 35%, #1a1a1a 70%, #111111 100%)'
       }}

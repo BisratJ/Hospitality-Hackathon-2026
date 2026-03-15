@@ -340,12 +340,18 @@ const Registration = () => {
   if (showSuccess) {
     return (
       <div
-        className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 -mt-[56px] pt-[56px] lg:-mt-[72px] lg:pt-[72px]"
+        className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 -mt-[56px] pt-[56px] nav:-mt-[72px] nav:pt-[72px] relative overflow-hidden"
         style={{
           background: "linear-gradient(135deg, #0a0a0a 0%, #171717 35%, #1a1a1a 70%, #111111 100%)"
         }}
       >
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        {/* Decorative cross-pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.04]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }}></div>
+        {/* Red radial glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.06]" style={{ background: "radial-gradient(circle, #DC2626 0%, transparent 70%)" }} />
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
           <div
             className="rounded-2xl border border-black/[0.06] bg-white/60 shadow-sm backdrop-blur-sm py-8 px-4 sm:px-10 text-center"
           >
@@ -395,14 +401,20 @@ const Registration = () => {
 
   return (
     <div
-      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 -mt-[56px] pt-[56px] lg:-mt-[72px] lg:pt-[72px]"
+      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 -mt-[56px] pt-[56px] nav:-mt-[72px] nav:pt-[72px] relative overflow-hidden"
       style={{
         background: "linear-gradient(135deg, #0a0a0a 0%, #171717 35%, #1a1a1a 70%, #111111 100%)"
       }}
     >
-      <div className="pt-10 sm:pt-14 lg:pt-16" />
+      {/* Decorative cross-pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.04]" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      }}></div>
+      {/* Red radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.06]" style={{ background: "radial-gradient(circle, #DC2626 0%, transparent 70%)" }} />
+      <div className="pt-10 sm:pt-14 lg:pt-16 relative z-10" />
       <div
-        className="max-w-3xl mx-auto rounded-2xl border border-white/10 shadow-xl p-8 sm:p-10"
+        className="max-w-3xl mx-auto rounded-2xl border border-white/10 shadow-xl p-8 sm:p-10 relative z-10"
         style={{
           background: "rgba(255, 255, 255, 0.08)",
           backdropFilter: "blur(20px) saturate(180%)",

@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      screens: {
+        'nav': '1037px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -44,12 +44,12 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full">
       {/* Mobile: flush to edges | Desktop (lg+): floating pill */}
-      <div className="lg:mx-auto lg:px-4">
+      <div className="nav:mx-auto nav:px-4">
         <div
           className={cn(
             "mx-auto px-4 sm:px-6",
             "border-b border-white/20",
-            "lg:border lg:border-white/30 lg:mt-3 lg:max-w-6xl lg:rounded-2xl lg:shadow-sm"
+            "nav:border nav:border-white/30 nav:mt-3 nav:max-w-6xl nav:rounded-2xl nav:shadow-sm"
           )}
           style={glassStyle}
         >
@@ -66,7 +66,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Navigation — visible at lg (1024px+) */}
-            <nav className="hidden lg:flex lg:gap-1">
+            <nav className="hidden nav:flex nav:gap-1">
               {routes.map((route) => (
                 <Link
                   key={route.path}
@@ -84,7 +84,7 @@ export default function Navbar() {
             </nav>
 
             {/* Desktop CTA — visible at lg+ */}
-            <div className="hidden lg:block">
+            <div className="hidden nav:block">
               <Link
                 to="/registration"
                 className="rounded-xl px-5 py-2 text-sm text-white font-medium transition-all duration-200 hover:opacity-90"
@@ -97,7 +97,7 @@ export default function Navbar() {
             {/* Mobile/Tablet Menu Button — visible below lg */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden inline-flex items-center justify-center rounded-lg w-9 h-9 text-slate-600 hover:bg-white/50 transition-colors"
+              className="nav:hidden inline-flex items-center justify-center rounded-lg w-9 h-9 text-slate-600 hover:bg-white/50 transition-colors"
               aria-label="Toggle menu"
             >
               <span className="relative w-5 h-5">
@@ -111,15 +111,15 @@ export default function Navbar() {
         {/* ── Mobile Menu Dropdown (overlays content) ── */}
         <div
           className={cn(
-            "lg:hidden absolute left-0 right-0 z-40 transition-all duration-300 ease-in-out",
-            "lg:left-auto lg:right-auto",
+            "nav:hidden absolute left-0 right-0 z-40 transition-all duration-300 ease-in-out",
+            "nav:left-auto nav:right-auto",
             isOpen
               ? "opacity-100 translate-y-0 pointer-events-auto"
               : "opacity-0 -translate-y-2 pointer-events-none"
           )}
         >
           <div
-            className="mx-0 lg:mx-auto lg:max-w-6xl border-b border-white/20 shadow-lg px-4 sm:px-6 pb-5 pt-3"
+            className="mx-0 nav:mx-auto nav:max-w-6xl border-b border-white/20 shadow-lg px-4 sm:px-6 pb-5 pt-3"
             style={glassStyle}
           >
             <nav className="flex flex-col gap-0.5">
@@ -156,7 +156,7 @@ export default function Navbar() {
       {/* Backdrop overlay when mobile menu is open */}
       <div
         className={cn(
-          "fixed inset-0 -z-10 lg:hidden transition-opacity duration-300",
+          "fixed inset-0 -z-10 nav:hidden transition-opacity duration-300",
           isOpen ? "bg-black/30 opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         onClick={() => setIsOpen(false)}
