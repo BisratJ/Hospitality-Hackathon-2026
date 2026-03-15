@@ -1,7 +1,15 @@
 export default {
   async fetch(request, env) {
+    const origin = request.headers.get('Origin') || '';
+    const allowedOrigins = [
+      'https://hospitality-hackathon-2026.vercel.app',
+      'https://www.hospitalityhackathon.et',
+      'https://hospitalityhackathon.et',
+    ];
+    const corsOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+
     const corsHeaders = {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': corsOrigin,
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Accept',
       'Access-Control-Max-Age': '86400',

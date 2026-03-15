@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+const API_URL = import.meta.env.VITE_API_URL || "https://api.hospitalityhackathon.et";
 
 const Registration = () => {
-  const navigate = useNavigate();
   const [registrationType, setRegistrationType] = useState("team");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -14,6 +15,7 @@ const Registration = () => {
     roleType: "",
     teamMembers: [{ fullName: "", email: "", phoneNumber: "", roleType: "" }],
   });
+
   const [status, setStatus] = useState({
     type: "",
     message: "",
@@ -257,7 +259,7 @@ const Registration = () => {
         message: "Processing your registration...",
       });
 
-      const response = await fetch("https://api.hospitalityhackathon.et/api/register", {
+      const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

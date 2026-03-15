@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.hospitalityhackathon.et';
+
 const CheckIn = () => {
   const [registrationDetails, setRegistrationDetails] = useState(null);
   const [status, setStatus] = useState({ type: '', message: '' });
@@ -27,7 +29,7 @@ const CheckIn = () => {
       
       // Fetch registration details
       const detailsResponse = await fetch(
-        `https://api.hospitalityhackathon.et/api/registration/${ticketData.ticketNumber}`
+        `${API_URL}/api/registration/${ticketData.ticketNumber}`
       );
       
       if (!detailsResponse.ok) {
@@ -39,7 +41,7 @@ const CheckIn = () => {
 
       // Perform check-in
       const checkInResponse = await fetch(
-        `https://api.hospitalityhackathon.et/api/checkin/${ticketData.ticketNumber}`,
+        `${API_URL}/api/checkin/${ticketData.ticketNumber}`,
         {
           method: 'POST',
           headers: {
