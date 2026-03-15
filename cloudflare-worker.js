@@ -3,8 +3,6 @@ export default {
     const origin = request.headers.get('Origin') || '';
     const allowedOrigins = [
       'https://hospitality-hackathon-2026.vercel.app',
-      'https://www.hospitalityhackathon.et',
-      'https://hospitalityhackathon.et',
     ];
     const corsOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
 
