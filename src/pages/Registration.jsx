@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL || "https://alx-hackathon-api.bisrojc60.workers.dev";
 
 const Registration = () => {
+  const navigate = useNavigate();
   const [registrationType, setRegistrationType] = useState("team");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -92,7 +93,7 @@ const Registration = () => {
   };
 
   const addTeamMember = () => {
-    if (formData.teamMembers.length < 4) {
+    if (formData.teamMembers.length < 5) {
       setFormData((prevState) => ({
         ...prevState,
         teamMembers: [...prevState.teamMembers, { fullName: "", email: "", phoneNumber: "", roleType: "" }],
@@ -282,6 +283,7 @@ const Registration = () => {
       console.log("API Response:", response.status, data);
 
       if (response.ok) {
+        setStatus({ type: "", message: "" });
         setShowSuccess(true);
         setFormData({
           fullName: "",
@@ -358,7 +360,7 @@ const Registration = () => {
             className="rounded-2xl border border-black/[0.06] bg-white/60 shadow-sm backdrop-blur-sm py-8 px-4 sm:px-10 text-center"
           >
             <div className="mb-6">
-              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full" style={{ backgroundColor: "#DC2626" }}>
+              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full" style={{ backgroundColor: "#16a34a" }}>
                 <svg className="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                 </svg>
@@ -375,8 +377,8 @@ const Registration = () => {
                 onClick={() => navigate("/")}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white transition-all duration-200 transform hover:scale-[1.02]"
                 style={{
-                  background: "linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%)",
-                  boxShadow: "0 4px 14px rgba(220, 38, 38, 0.35)"
+                  background: "linear-gradient(135deg, #16a34a 0%, #15803d 50%, #166534 100%)",
+                  boxShadow: "0 4px 14px rgba(22, 163, 74, 0.35)"
                 }}
               >
                 Return to Home
@@ -388,8 +390,8 @@ const Registration = () => {
                 }}
                 className="w-full flex justify-center py-2 px-4 border border-neutral-300 rounded-lg shadow-sm text-sm font-medium text-neutral-700 bg-white/80 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200"
                 style={{
-                  borderColor: "#DC2626",
-                  color: "#DC2626"
+                  borderColor: "#16a34a",
+                  color: "#16a34a"
                 }}
               >
                 Register Another Participant

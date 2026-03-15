@@ -150,34 +150,29 @@ export default {
           </html>
         `;
 
-        // Send email using Mailchannels
-        const emailResponse = await fetch('https://api.mailchannels.net/tx/v1/send', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            personalizations: [
-              {
-                to: [{ email: data.email, name: data.fullName }],
+        // Send email using Resend
+        if (env.RESEND_API_KEY) {
+          try {
+            const emailResponse = await fetch('https://api.resend.com/emails', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                'Content-Type': 'application/json',
               },
-            ],
-            from: {
-              email: 'noreply@alxhackathon.com',
-              name: 'ALX Hackathon',
-            },
-            subject: 'ALX Hackathon Registration Confirmation',
-            content: [
-              {
-                type: 'text/html',
-                value: emailHtml,
-              },
-            ],
-          }),
-        });
+              body: JSON.stringify({
+                from: 'ALX Hackathon <onboarding@resend.dev>',
+                to: [data.email],
+                subject: 'ALX Hackathon Registration Confirmation',
+                html: emailHtml,
+              }),
+            });
 
-        if (!emailResponse.ok) {
-          console.error('Failed to send email:', await emailResponse.text());
+            if (!emailResponse.ok) {
+              console.error('Failed to send email:', await emailResponse.text());
+            }
+          } catch (emailErr) {
+            console.error('Email send error:', emailErr);
+          }
         }
 
         // Insert user into database
@@ -276,34 +271,29 @@ export default {
                 </html>
               `;
 
-              // Send email to team member using Mailchannels
-              const memberEmailResponse = await fetch('https://api.mailchannels.net/tx/v1/send', {
-                method: 'POST',
-                headers: {
-                  'content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                  personalizations: [
-                    {
-                      to: [{ email: member.email, name: member.fullName }],
+              // Send email to team member using Resend
+              if (env.RESEND_API_KEY) {
+                try {
+                  const memberEmailResponse = await fetch('https://api.resend.com/emails', {
+                    method: 'POST',
+                    headers: {
+                      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                      'Content-Type': 'application/json',
                     },
-                  ],
-                  from: {
-                    email: 'noreply@alxhackathon.com',
-                    name: 'ALX Hackathon',
-                  },
-                  subject: 'ALX Hackathon Team Registration Confirmation',
-                  content: [
-                    {
-                      type: 'text/html',
-                      value: memberEmailHtml,
-                    },
-                  ],
-                }),
-              });
+                    body: JSON.stringify({
+                      from: 'ALX Hackathon <onboarding@resend.dev>',
+                      to: [member.email],
+                      subject: 'ALX Hackathon Team Registration Confirmation',
+                      html: memberEmailHtml,
+                    }),
+                  });
 
-              if (!memberEmailResponse.ok) {
-                console.error('Failed to send team member email:', await memberEmailResponse.text());
+                  if (!memberEmailResponse.ok) {
+                    console.error('Failed to send team member email:', await memberEmailResponse.text());
+                  }
+                } catch (emailErr) {
+                  console.error('Team member email error:', emailErr);
+                }
               }
 
               // Insert team member into database
