@@ -150,6 +150,8 @@ export default {
           </html>
         `;
 
+        let emailErrors = [];
+
         // Send email using Resend
         if (env.RESEND_API_KEY) {
           try {
@@ -168,10 +170,13 @@ export default {
             });
 
             if (!emailResponse.ok) {
-              console.error('Failed to send email:', await emailResponse.text());
+              const errorText = await emailResponse.text();
+              console.error('Failed to send email:', errorText);
+              emailErrors.push({ email: data.email, error: errorText });
             }
           } catch (emailErr) {
             console.error('Email send error:', emailErr);
+            emailErrors.push({ email: data.email, error: emailErr.message });
           }
         }
 
@@ -289,10 +294,13 @@ export default {
                   });
 
                   if (!memberEmailResponse.ok) {
-                    console.error('Failed to send team member email:', await memberEmailResponse.text());
+                    const memberErrorText = await memberEmailResponse.text();
+                    console.error('Failed to send team member email:', memberErrorText);
+                    emailErrors.push({ email: member.email, error: memberErrorText });
                   }
                 } catch (emailErr) {
                   console.error('Team member email error:', emailErr);
+                  emailErrors.push({ email: member.email, error: emailErr.message });
                 }
               }
 
@@ -317,7 +325,8 @@ export default {
         return new Response(
           JSON.stringify({ 
             message: 'Registration successful',
-            ticketNumber 
+            ticketNumber,
+            emailErrors: emailErrors.length > 0 ? emailErrors : undefined
           }),
           {
             status: 201,

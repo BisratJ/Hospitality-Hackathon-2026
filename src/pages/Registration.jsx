@@ -305,18 +305,27 @@ const Registration = () => {
             errorMessage = data.details;
           }
           
-          // Set specific field error
-          if (errorMessage.includes("team member")) {
-            setFieldErrors((prev) => ({
-              ...prev,
-              email: "Already registered as team member"
-            }));
-          } else {
-            setFieldErrors((prev) => ({
-              ...prev,
-              email: "Email already registered"
-            }));
+          // Determine which field caused the error
+          let fieldKey = "email"; // default to team lead's email
+          const fullErrorText = (data.error + " " + (data.details || "")).toLowerCase();
+          
+          if (fullErrorText.includes("team member")) {
+            // Find the specific team member whose email matches the error text
+            const memberIndex = formData.teamMembers.findIndex(
+              (m) => m.email && fullErrorText.includes(m.email.toLowerCase())
+            );
+            
+            if (memberIndex > 0) {
+              fieldKey = `teamMember-${memberIndex}-email`;
+            } else {
+              fieldKey = "email"; // Fallback to team lead if we can't parse it
+            }
           }
+
+          setFieldErrors((prev) => ({
+            ...prev,
+            [fieldKey]: errorMessage,
+          }));
         } else if (response.status === 400) {
           errorMessage += "Please check your information and try again.";
         } else if (response.status === 429) {
