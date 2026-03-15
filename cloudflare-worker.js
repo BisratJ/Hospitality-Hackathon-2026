@@ -152,20 +152,21 @@ export default {
 
         let emailErrors = [];
 
-        // Send email using Resend
-        if (env.RESEND_API_KEY) {
+        // Send email using Brevo (formerly Sendinblue)
+        if (env.BREVO_API_KEY) {
           try {
-            const emailResponse = await fetch('https://api.resend.com/emails', {
+            const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
               method: 'POST',
               headers: {
-                'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                'api-key': env.BREVO_API_KEY,
                 'Content-Type': 'application/json',
+                'accept': 'application/json',
               },
               body: JSON.stringify({
-                from: 'ALX Hackathon <onboarding@resend.dev>',
-                to: [data.email],
+                sender: { name: 'ALX Hackathon', email: 'noreply@hospitalityhackathon.et' },
+                to: [{ email: data.email, name: data.fullName }],
                 subject: 'ALX Hackathon Registration Confirmation',
-                html: emailHtml,
+                htmlContent: emailHtml,
               }),
             });
 
@@ -276,20 +277,21 @@ export default {
                 </html>
               `;
 
-              // Send email to team member using Resend
-              if (env.RESEND_API_KEY) {
+              // Send email to team member using Brevo
+              if (env.BREVO_API_KEY) {
                 try {
-                  const memberEmailResponse = await fetch('https://api.resend.com/emails', {
+                  const memberEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
                     method: 'POST',
                     headers: {
-                      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                      'api-key': env.BREVO_API_KEY,
                       'Content-Type': 'application/json',
+                      'accept': 'application/json',
                     },
                     body: JSON.stringify({
-                      from: 'ALX Hackathon <onboarding@resend.dev>',
-                      to: [member.email],
+                      sender: { name: 'ALX Hackathon', email: 'noreply@hospitalityhackathon.et' },
+                      to: [{ email: member.email, name: member.fullName }],
                       subject: 'ALX Hackathon Team Registration Confirmation',
-                      html: memberEmailHtml,
+                      htmlContent: memberEmailHtml,
                     }),
                   });
 
