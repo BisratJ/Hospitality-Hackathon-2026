@@ -11,7 +11,7 @@ export default {
     const corsHeaders = {
       'Access-Control-Allow-Origin': corsOrigin,
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Accept',
+      'Access-Control-Allow-Headers': 'Content-Type, Accept, Authorization',
       'Access-Control-Max-Age': '86400',
     };
 
