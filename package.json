@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.4",
+    "@supabase/supabase-js": "^2.99.2",
     "build": "^0.1.4",
     "html5-qrcode": "^2.3.8",
     "lucide-react": "^0.479.0",
