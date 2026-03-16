@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { Link } from "react-router-dom"
 import {
   Image,
@@ -13,6 +13,7 @@ import {
   Maximize2,
   ChevronRight,
   Loader2,
+  ChevronDown,
 } from "lucide-react"
 import { supabase, GALLERY_BUCKET, STORAGE_BASE_URL } from "../lib/supabase"
 
@@ -20,6 +21,7 @@ const RED = "#DC2626"
 const darkSection = "linear-gradient(135deg, #0a0a0a 0%, #171717 35%, #1a1a1a 70%, #111111 100%)"
 const btnGradient = "linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%)"
 const btnShadow = "0 4px 14px rgba(220, 38, 38, 0.35)"
+const ITEMS_PER_PAGE = 12
 
 const categories = [
   { key: "all", label: "All Photos", icon: <Image className="h-3.5 w-3.5" /> },
@@ -60,6 +62,47 @@ const featuredArticles = [
   },
 ]
 
+// ─── Lazy Image with Intersection Observer ───
+function LazyImage({ src, alt, className, onLoad, loaded }) {
+  const imgRef = useRef(null)
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    const el = imgRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.unobserve(el) } },
+      { rootMargin: '200px' }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={imgRef} className="w-full h-full">
+      {inView ? (
+        <img
+          src={src}
+          alt={alt}
+          decoding="async"
+          onLoad={onLoad}
+          className={className}
+        />
+      ) : null}
+    </div>
+  )
+}
+
+// ─── Get thumbnail URL (smaller for grid) ───
+function getThumbUrl(originalUrl) {
+  // Supabase render/image endpoint for on-the-fly resizing
+  // Falls back to original if transformation not available
+  return originalUrl.replace(
+    '/storage/v1/object/public/',
+    '/storage/v1/render/image/public/'
+  ) + '?width=600&resize=contain&quality=60'
+}
+
 export default function Gallery() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [activeFilter, setActiveFilter] = useState("all")
@@ -68,6 +111,8 @@ export default function Gallery() {
   const [photos, setPhotos] = useState({ day1: [], day2: [] })
   const [loading, setLoading] = useState(true)
   const [counts, setCounts] = useState({ day1: 0, day2: 0 })
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE)
+  const [thumbsWork, setThumbsWork] = useState(true) // track if render endpoint works
 
   // Fetch photos from Supabase storage
   useEffect(() => {
@@ -104,6 +149,15 @@ export default function Gallery() {
 
         setPhotos({ day1: day1Files, day2: day2Files })
         setCounts({ day1: day1Files.length, day2: day2Files.length })
+
+        // Test if thumbnail rendering works (Supabase Pro feature)
+        if (day1Files.length > 0) {
+          try {
+            const testUrl = getThumbUrl(day1Files[0].image)
+            const res = await fetch(testUrl, { method: 'HEAD' })
+            if (!res.ok) setThumbsWork(false)
+          } catch { setThumbsWork(false) }
+        }
       } catch (err) {
         console.error('Failed to load gallery:', err)
       } finally {
@@ -112,6 +166,9 @@ export default function Gallery() {
     }
     fetchPhotos()
   }, [])
+
+  // Reset page when filter changes
+  useEffect(() => { setVisibleCount(ITEMS_PER_PAGE) }, [activeFilter])
 
   // Close lightbox on Escape
   useEffect(() => {
@@ -131,9 +188,16 @@ export default function Gallery() {
     }
   }
   const filtered = getFiltered()
+  const visibleItems = filtered.slice(0, visibleCount)
+  const hasMore = visibleCount < filtered.length
 
   const handleImageLoad = (id) => {
     setImageLoaded(prev => ({ ...prev, [id]: true }))
+  }
+
+  const getDisplayUrl = (item) => {
+    if (!item.image) return ''
+    return thumbsWork ? getThumbUrl(item.image) : item.image
   }
 
   const navigateLightbox = useCallback((direction) => {
@@ -241,7 +305,7 @@ export default function Gallery() {
           ) : (
             <>
               <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 max-w-6xl mx-auto">
-                {filtered.map((item) => (
+                {visibleItems.map((item) => (
                   <div
                     key={item.id}
                     className="break-inside-avoid mb-4 group cursor-pointer"
@@ -262,22 +326,21 @@ export default function Gallery() {
                       ) : (
                         <div className="relative bg-neutral-100 aspect-[4/3] overflow-hidden">
                           {!imageLoaded[item.id] && (
-                            <div className="absolute inset-0 bg-neutral-200 animate-pulse flex items-center justify-center">
+                            <div className="absolute inset-0 bg-neutral-200 animate-pulse flex items-center justify-center z-10">
                               <Image className="h-8 w-8 text-neutral-300" />
                             </div>
                           )}
-                          <img
-                            src={item.image}
+                          <LazyImage
+                            src={getDisplayUrl(item)}
                             alt={item.title}
-                            loading="lazy"
-                            decoding="async"
                             onLoad={() => handleImageLoad(item.id)}
+                            loaded={imageLoaded[item.id]}
                             className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
                               imageLoaded[item.id] ? "opacity-100" : "opacity-0"
                             }`}
                           />
                           {/* Hover overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-4">
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-4 z-20">
                             <div className="flex items-end justify-between w-full">
                               <div>
                                 <p className="text-white text-sm font-semibold">{item.title}</p>
@@ -299,6 +362,19 @@ export default function Gallery() {
                   </div>
                 ))}
               </div>
+
+              {/* Load More */}
+              {hasMore && (
+                <div className="flex justify-center mt-10">
+                  <button
+                    onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
+                    className="inline-flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold text-neutral-700 bg-white border border-neutral-200 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all duration-200"
+                  >
+                    <ChevronDown className="h-4 w-4" />
+                    Load More ({filtered.length - visibleCount} remaining)
+                  </button>
+                </div>
+              )}
 
               {filtered.length === 0 && !loading && (
                 <div className="text-center py-20">
@@ -337,6 +413,7 @@ export default function Gallery() {
             <ChevronRight className="h-5 w-5" />
           </button>
 
+          {/* Full-res image in lightbox */}
           <div
             className="relative max-w-5xl w-full max-h-[90vh] rounded-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
