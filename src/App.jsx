@@ -24,6 +24,7 @@ function App() {
           <Route path='/registration' element={<Registration />} />
           <Route path='/contact-us' element={<ContactUs />} />
           <Route path='/check-in' element={<CheckIn />} />
+          <Route path='/checkin' element={<CheckIn />} />
           <Route path='/past-events' element={<PastEvents />} />
           <Route path='/faq' element={<FAQ />} />
           <Route path='/gallery' element={<Gallery />} />

@@ -71,7 +71,7 @@ export default function PastEvents() {
     {
       name: "Yasser Bagersh",
       role: "Managing Director, Cactus Communications",
-      image: null,
+      image: "/assets/images/Yasser.png",
     },
     {
       name: "Tadios Tefera",
@@ -81,7 +81,7 @@ export default function PastEvents() {
     {
       name: "Dr. Temesgen Gebrehiowt",
       role: "Founder & CEO, Etta Solutions",
-      image: null,
+      image: "/assets/images/temesgen.jpg",
     },
   ]
 
@@ -89,7 +89,7 @@ export default function PastEvents() {
     {
       name: "Misikir Adane",
       role: "CEO & Co-Founder, Muyalogy",
-      image: null,
+      image: "/assets/images/Misikir.jpeg",
     },
     {
       name: "Yoadan Tilahun",
@@ -101,6 +101,11 @@ export default function PastEvents() {
       role: "Moderator",
       image: "/assets/images/Helinna.jpeg",
     },
+    {
+      name: "Yonaiel Tadiwos Belete",
+      role: "Operations Director, Boston Partners PLC",
+      image: "/assets/images/Yonaiel.jpeg",
+    },
   ]
 
   const juryTabs = [
@@ -109,8 +114,8 @@ export default function PastEvents() {
   ]
 
   const timeline = [
-    { time: "Day 1 — April 5, 2025", venue: "ALX Tech Hub, Lideta", events: ["Opening ceremony & keynotes", "Industry panel with hospitality leaders", "Team formation & brainstorming", "MVP development with mentor guidance", "Technical review sessions"] },
-    { time: "Day 2 — April 19, 2025", venue: "Kuriftu African Village, Burayu", events: ["Final pitch preparation", "Demo presentations to judges", "Awards ceremony", "Networking lunch & open discussions", "Closing remarks"] },
+    { time: "Day 1 — April 12, 2025", venue: "ALX Tech Hub, Lideta", events: ["Opening ceremony & keynotes", "Industry panel with hospitality leaders", "Team formation & brainstorming", "MVP development with mentor guidance", "Technical review sessions"] },
+    { time: "Day 2 — April 13, 2025", venue: "Kuriftu African Village, Burayu", events: ["Final pitch preparation", "Demo presentations to judges", "Awards ceremony", "Networking lunch & open discussions", "Closing remarks"] },
   ]
 
   return (
@@ -139,7 +144,7 @@ export default function PastEvents() {
             <div className="flex flex-wrap items-center justify-center gap-3">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white/60" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <Calendar className="h-3.5 w-3.5 text-red-400" />
-                April 5 & 19, 2025
+                April 12 & 13, 2025
               </div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white/60" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <MapPin className="h-3.5 w-3.5 text-red-400" />
