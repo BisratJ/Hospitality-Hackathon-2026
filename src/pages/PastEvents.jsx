@@ -76,7 +76,7 @@ export default function PastEvents() {
     {
       name: "Tadios Tefera",
       role: "CTO, MMCY Tech",
-      image: "/assets/images/Tadiwos.jpeg",
+      image: "/assets/images/Tadios.jpeg",
     },
     {
       name: "Dr. Temesgen Gebrehiowt",

@@ -264,6 +264,146 @@ export default function Resources() {
 
       {/* Main content */}
       <div className="container mx-auto px-4 py-12">
+        {/* Training Programs — moved to top for visibility */}
+        <section className="mb-24">
+          <div className="flex items-center mb-4">
+            <div className="p-2 bg-red-100 rounded-lg mr-3">
+              <Star className="h-7 w-7 text-red-600" />
+            </div>
+            <h2 className="text-3xl font-bold text-neutral-900">Training Program</h2>
+          </div>
+          <p className="text-neutral-600 mb-3 max-w-3xl">
+            Pre-event preparation sessions designed to set every team up for success. All sessions are <span className="font-semibold text-neutral-900">completely free</span> and open to all registered teams.
+          </p>
+          <p className="text-sm text-neutral-400 mb-8 max-w-3xl italic">
+            All sessions will be recorded and shared with participants after each session.
+          </p>
+
+          <div className="space-y-4 mb-8">
+            {[
+              {
+                number: "1",
+                title: "Understanding Problem Statements & Hospitality Context",
+                topic: "Industry Context & Challenge Framing",
+                format: "Online Webinar",
+                date: "TBA",
+                time: "TBA",
+                platform: "Zoom",
+                link: "#",
+                color: "#DC2626",
+                colorEnd: "#991B1B",
+              },
+              {
+                number: "2",
+                title: "Introduction to AI Tools for Hospitality",
+                topic: "AI Fundamentals & Hospitality Applications",
+                format: "Online Webinar",
+                date: "TBA",
+                time: "TBA",
+                platform: "Zoom",
+                link: "#",
+                color: "#2563eb",
+                colorEnd: "#1d4ed8",
+              },
+              {
+                number: "3",
+                title: "MVP Design & Rapid Prototyping",
+                topic: "Product Design & Development Strategy",
+                format: "Online Webinar",
+                date: "TBA",
+                time: "TBA",
+                platform: "Google Meet",
+                link: "#",
+                color: "#059669",
+                colorEnd: "#047857",
+              },
+              {
+                number: "4",
+                title: "Pitching & Storytelling for Impact",
+                topic: "Presentation Skills & Narrative Building",
+                format: "Online Workshop",
+                date: "TBA",
+                time: "TBA",
+                platform: "Zoom",
+                link: "#",
+                color: "#D4952C",
+                colorEnd: "#b45309",
+              },
+              {
+                number: "—",
+                title: "Office Hours — Open Q&A with Mentors",
+                topic: "Ask Anything",
+                format: "Optional Drop-in",
+                date: "TBA",
+                time: "TBA",
+                platform: "Zoom",
+                link: "#",
+                color: "#64748b",
+                colorEnd: "#475569",
+              },
+            ].map((session, i) => (
+              <div key={i} className="rounded-2xl border border-black/[0.06] bg-white/60 shadow-sm backdrop-blur-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                <div className="flex flex-col md:flex-row">
+                  {/* Left accent + number */}
+                  <div className="flex items-center justify-center md:w-16 px-4 py-3 md:py-0 flex-shrink-0" style={{ background: `linear-gradient(135deg, ${session.color} 0%, ${session.colorEnd || session.color} 100%)` }}>
+                    <span className="text-white font-bold text-lg">{session.number}</span>
+                  </div>
+                  {/* Content */}
+                  <div className="flex-1 p-5 md:p-6">
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3">
+                      <div className="flex-1">
+                        <h3 className="text-base font-semibold text-neutral-900 mb-1">{session.title}</h3>
+                        <p className="text-sm text-neutral-500 mb-3">{session.topic}</p>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-100">
+                            <BookOpen className="h-3 w-3" />
+                            {session.format}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-100">
+                            <Coffee className="h-3 w-3" />
+                            {session.date} · {session.time}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-100">
+                            <Wifi className="h-3 w-3" />
+                            {session.platform}
+                          </span>
+                        </div>
+                      </div>
+                      <a
+                        href={session.link}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all duration-200 whitespace-nowrap self-start"
+                        style={{ background: `linear-gradient(135deg, ${session.color} 0%, ${session.colorEnd || session.color} 100%)` }}
+                      >
+                        Register
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Free + recorded note banner */}
+          <div className="rounded-2xl p-6 md:p-8 border border-black/[0.06] bg-gradient-to-r from-red-50 to-neutral-50">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
+              <div className="p-3 bg-white/80 rounded-xl shadow-sm">
+                <Users className="h-8 w-8 text-red-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-1">All Training Is Free</h3>
+                <p className="text-sm text-neutral-600">
+                  Every session is free for registered participants. Can't make it live? All sessions are recorded and shared afterward so you never miss out. Dates, times, and registration links will be announced soon.
+                </p>
+              </div>
+              <a href="https://www.alxafrica.com/ethiopia/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white transition-all duration-200 whitespace-nowrap" style={{ background: "linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)" }}>
+                Learn More
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* Articles and Tutorials */}
         <section className="mb-24">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
@@ -471,145 +611,7 @@ export default function Resources() {
           )}
         </section>
 
-        {/* Training Programs */}
-        <section className="mb-24">
-          <div className="flex items-center mb-4">
-            <div className="p-2 bg-red-100 rounded-lg mr-3">
-              <Star className="h-7 w-7 text-red-600" />
-            </div>
-            <h2 className="text-3xl font-bold text-neutral-900">Training Program</h2>
-          </div>
-          <p className="text-neutral-600 mb-3 max-w-3xl">
-            Pre-event preparation sessions designed to set every team up for success. All sessions are <span className="font-semibold text-neutral-900">completely free</span> and open to all registered teams.
-          </p>
-          <p className="text-sm text-neutral-400 mb-8 max-w-3xl italic">
-            All sessions will be recorded and shared with participants after each session.
-          </p>
 
-          <div className="space-y-4 mb-8">
-            {[
-              {
-                number: "1",
-                title: "Understanding Problem Statements & Hospitality Context",
-                topic: "Industry Context & Challenge Framing",
-                format: "Online Webinar",
-                date: "TBA",
-                time: "TBA",
-                platform: "Zoom",
-                link: "#",
-                color: "#DC2626",
-                colorEnd: "#991B1B",
-              },
-              {
-                number: "2",
-                title: "Introduction to AI Tools for Hospitality",
-                topic: "AI Fundamentals & Hospitality Applications",
-                format: "Online Webinar",
-                date: "TBA",
-                time: "TBA",
-                platform: "Zoom",
-                link: "#",
-                color: "#2563eb",
-                colorEnd: "#1d4ed8",
-              },
-              {
-                number: "3",
-                title: "MVP Design & Rapid Prototyping",
-                topic: "Product Design & Development Strategy",
-                format: "Online Webinar",
-                date: "TBA",
-                time: "TBA",
-                platform: "Google Meet",
-                link: "#",
-                color: "#059669",
-                colorEnd: "#047857",
-              },
-              {
-                number: "4",
-                title: "Pitching & Storytelling for Impact",
-                topic: "Presentation Skills & Narrative Building",
-                format: "Online Workshop",
-                date: "TBA",
-                time: "TBA",
-                platform: "Zoom",
-                link: "#",
-                color: "#D4952C",
-                colorEnd: "#b45309",
-              },
-              {
-                number: "—",
-                title: "Office Hours — Open Q&A with Mentors",
-                topic: "Ask Anything",
-                format: "Optional Drop-in",
-                date: "TBA",
-                time: "TBA",
-                platform: "Zoom",
-                link: "#",
-                color: "#64748b",
-                colorEnd: "#475569",
-              },
-            ].map((session, i) => (
-              <div key={i} className="rounded-2xl border border-black/[0.06] bg-white/60 shadow-sm backdrop-blur-sm hover:shadow-md transition-all duration-300 overflow-hidden">
-                <div className="flex flex-col md:flex-row">
-                  {/* Left accent + number */}
-                  <div className="flex items-center justify-center md:w-16 px-4 py-3 md:py-0 flex-shrink-0" style={{ background: `linear-gradient(135deg, ${session.color} 0%, ${session.colorEnd || session.color} 100%)` }}>
-                    <span className="text-white font-bold text-lg">{session.number}</span>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 p-5 md:p-6">
-                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3">
-                      <div className="flex-1">
-                        <h3 className="text-base font-semibold text-neutral-900 mb-1">{session.title}</h3>
-                        <p className="text-sm text-neutral-500 mb-3">{session.topic}</p>
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-100">
-                            <BookOpen className="h-3 w-3" />
-                            {session.format}
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-100">
-                            <Coffee className="h-3 w-3" />
-                            {session.date} · {session.time}
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-50 text-xs font-medium text-neutral-600 border border-neutral-100">
-                            <Wifi className="h-3 w-3" />
-                            {session.platform}
-                          </span>
-                        </div>
-                      </div>
-                      <a
-                        href={session.link}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all duration-200 whitespace-nowrap self-start"
-                        style={{ background: `linear-gradient(135deg, ${session.color} 0%, ${session.colorEnd || session.color} 100%)` }}
-                      >
-                        Register
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Free + recorded note banner */}
-          <div className="rounded-2xl p-6 md:p-8 border border-black/[0.06] bg-gradient-to-r from-red-50 to-neutral-50">
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
-              <div className="p-3 bg-white/80 rounded-xl shadow-sm">
-                <Users className="h-8 w-8 text-red-600" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-neutral-900 mb-1">All Training Is Free</h3>
-                <p className="text-sm text-neutral-600">
-                  Every session is free for registered participants. Can't make it live? All sessions are recorded and shared afterward so you never miss out. Dates, times, and registration links will be announced soon.
-                </p>
-              </div>
-              <a href="https://www.alxafrica.com/ethiopia/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white transition-all duration-200 whitespace-nowrap" style={{ background: "linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)" }}>
-                Learn More
-                <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
-        </section>
 
         {/* FAQ Section */}
         <section className="mb-24">
@@ -678,7 +680,7 @@ export default function Resources() {
               Can't find what you're looking for? Our team is here to help you prepare for the hackathon.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={() => {window.location.href ='mailto:ethiopia@alxafrica.com';}} className="bg-white text-red-600 font-medium px-6 py-3 rounded-lg hover:bg-neutral-50 transition-colors shadow-lg">
+              <button onClick={() => {window.location.href ='mailto:info@hospitalityhackathon.et';}} className="bg-white text-red-600 font-medium px-6 py-3 rounded-lg hover:bg-neutral-50 transition-colors shadow-lg">
                 Contact Support
               </button>
               <button onClick={() => window.location.href='https://www.alxafrica.com/ethiopia/'} className="bg-gradient-to-r from-red-600 to-red-900 text-white font-medium px-6 py-3 rounded-lg hover:shadow-xl transition-all shadow-lg">

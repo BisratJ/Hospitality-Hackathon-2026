@@ -595,7 +595,7 @@ export default function Home() {
             <div className="hidden sm:block w-1 h-1 bg-neutral-300 rounded-full"></div>
             <div className="flex items-center gap-2 text-sm text-neutral-500">
               <Phone className="h-4 w-4 text-neutral-400" />
-              +251 91 234 5678
+              +251 977 464 570
             </div>
           </div>
         </div>

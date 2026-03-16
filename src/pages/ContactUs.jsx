@@ -181,7 +181,7 @@ const ContactUs = () => {
               <h3 className="text-lg font-medium text-white font-mono">
                 <span className="text-red-400">&gt;</span> Phone
               </h3>
-              <p className="mt-2 text-neutral-300">+251 911 223344</p>
+              <p className="mt-2 text-neutral-300">+251 977 464 570</p>
             </div>
 
             <div className="text-center transform hover:scale-105 transition-transform duration-300 group">
@@ -198,7 +198,7 @@ const ContactUs = () => {
               <h3 className="text-lg font-medium text-white font-mono">
                 <span className="text-red-400">&gt;</span> Email
               </h3>
-              <p className="mt-2 text-neutral-300">hackathon@alxethiopia.com</p>
+              <p className="mt-2 text-neutral-300">info@hospitalityhackathon.et</p>
             </div>
 
             <div className="text-center transform hover:scale-105 transition-transform duration-300 group">

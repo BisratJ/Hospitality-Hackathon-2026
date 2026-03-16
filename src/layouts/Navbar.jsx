@@ -9,6 +9,7 @@ const routes = [
   { path: "/about-us", label: "About Us" },
   { path: "/resources", label: "Resources" },
   { path: "/past-events", label: "2025 Edition" },
+  { path: "/gallery", label: "Gallery" },
   { path: "/faq", label: "FAQ" },
   { path: "/registration", label: "Registration" },
   { path: "/contact-us", label: "Contact Us" },
