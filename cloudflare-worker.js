@@ -98,95 +98,81 @@ export default {
             <head>
               <meta charset="utf-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>ALX Hackathon Registration</title>
+              <title>Hospitality Hackathon Registration</title>
             </head>
-            <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #0a0a0f;">
-              <div style="max-width: 600px; margin: 0 auto;">
+            <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f5f5f5;">
+              <div style="max-width: 600px; margin: 0 auto; overflow: hidden;">
                 
-                <!-- Header with Logo -->
-                <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); padding: 40px 20px 30px; text-align: center; border-bottom: 3px solid #2563eb;">
-                  <div style="margin-bottom: 16px;">
-                    <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/favicon.ico" alt="ALX Hackathon" style="width: 56px; height: 56px; border-radius: 12px;" />
-                  </div>
-                  <h1 style="color: #ffffff; margin: 0 0 6px 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px;">ALX Hospitality Hackathon</h1>
-                  <p style="color: #94a3b8; margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">2026 · Addis Ababa</p>
+                <!-- Header — black with logo -->
+                <div style="background: #000000; padding: 32px 30px; text-align: center;">
+                  <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl-clean.png" alt="Hospitality Hackathon" style="height: 48px; margin-bottom: 12px; filter: invert(1);" />
+                  <p style="color: #999999; margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;">Hospitality Hackathon 2026</p>
                 </div>
 
-                <!-- Success Banner -->
-                <div style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 20px 30px; text-align: center;">
-                  <div style="display: inline-block; margin-bottom: 8px;">
-                    <span style="font-size: 28px;">🎉</span>
-                  </div>
-                  <h2 style="color: #ffffff; margin: 0 0 4px 0; font-size: 20px; font-weight: 700;">You're In, ${data.fullName}!</h2>
-                  <p style="color: #bfdbfe; margin: 0; font-size: 14px;">Your registration has been confirmed</p>
+                <!-- Red accent banner -->
+                <div style="background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); padding: 24px 30px; text-align: center;">
+                  <h1 style="color: #ffffff; margin: 0 0 4px 0; font-size: 22px; font-weight: 700;">You're In, ${data.fullName}! 🎉</h1>
+                  <p style="color: #fecaca; margin: 0; font-size: 14px;">Your registration has been confirmed</p>
                 </div>
 
-                <!-- Content Card -->
-                <div style="background-color: #ffffff; padding: 0; margin: 0;">
+                <!-- White content area -->
+                <div style="background: #ffffff; padding: 30px;">
                   
-                  <!-- Ticket Details -->
-                  <div style="padding: 30px 30px 25px;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                      <tr>
-                        <td style="padding: 12px 16px; background: #f8fafc; border-radius: 8px 8px 0 0; border-bottom: 1px solid #e2e8f0;">
-                          <span style="color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Ticket Number</span><br/>
-                          <span style="color: #0f172a; font-size: 20px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${ticketNumber}</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
-                          <span style="color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Role</span><br/>
-                          <span style="color: #0f172a; font-size: 15px; font-weight: 600;">${data.roleType}</span>
-                        </td>
-                      </tr>
-                      ${data.teamName ? `
-                      <tr>
-                        <td style="padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
-                          <span style="color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Team</span><br/>
-                          <span style="color: #0f172a; font-size: 15px; font-weight: 600;">${data.teamName}</span>
-                        </td>
-                      </tr>
-                      ` : ''}
-                      <tr>
-                        <td style="padding: 12px 16px; background: #f8fafc; border-radius: 0 0 8px 8px;">
-                          <span style="color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Registration Type</span><br/>
-                          <span style="color: #0f172a; font-size: 15px; font-weight: 600;">${data.registrationType === 'team' ? 'Team' : 'Individual'}</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
+                  <!-- Ticket details -->
+                  <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+                    <tr>
+                      <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket Number</span><br/>
+                        <span style="color: #000; font-size: 18px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${ticketNumber}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
+                        <span style="color: #000; font-size: 15px; font-weight: 600;">${data.roleType}</span>
+                      </td>
+                    </tr>
+                    ${data.teamName ? `
+                    <tr>
+                      <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
+                        <span style="color: #000; font-size: 15px; font-weight: 600;">${data.teamName}</span>
+                      </td>
+                    </tr>
+                    ` : ''}
+                    <tr>
+                      <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626;">
+                        <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Type</span><br/>
+                        <span style="color: #000; font-size: 15px; font-weight: 600;">${data.registrationType === 'team' ? 'Team' : 'Individual'}</span>
+                      </td>
+                    </tr>
+                  </table>
 
-                  <!-- QR Code Section -->
-                  <div style="text-align: center; padding: 0 30px 30px;">
-                    <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 12px; padding: 24px; display: inline-block;">
-                      <p style="color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin: 0 0 16px 0;">Your Check-in QR Code</p>
-                      <div style="background: #ffffff; padding: 12px; border-radius: 8px; display: inline-block;">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=180x180&color=0f172a" alt="Check-in QR Code" style="width: 180px; height: 180px; display: block;"/>
+                  <!-- QR Code -->
+                  <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="background: #000; border-radius: 12px; padding: 20px; display: inline-block;">
+                      <p style="color: #999; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin: 0 0 12px 0;">Check-in QR Code</p>
+                      <div style="background: #fff; padding: 10px; border-radius: 8px; display: inline-block;">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=160x160&color=000000" alt="QR Code" style="width: 160px; height: 160px; display: block;"/>
                       </div>
-                      <p style="color: #64748b; font-size: 12px; margin: 14px 0 0 0;">Screenshot or save this code for event day</p>
                     </div>
                   </div>
 
-                  <!-- What's Next -->
-                  <div style="padding: 0 30px 30px;">
-                    <div style="border-left: 3px solid #2563eb; padding-left: 16px;">
-                      <h3 style="color: #0f172a; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">What's Next?</h3>
-                      <p style="color: #64748b; font-size: 13px; margin: 0; line-height: 1.7;">
-                        ✅ Save your QR code for check-in<br/>
-                        ✅ Join our community channels for updates<br/>
-                        ✅ Prepare your ideas and get ready to innovate!
-                      </p>
-                    </div>
+                  <!-- Next steps -->
+                  <div style="border-left: 3px solid #DC2626; padding-left: 16px; margin-bottom: 8px;">
+                    <h3 style="color: #000; font-size: 14px; font-weight: 700; margin: 0 0 6px 0;">What's Next?</h3>
+                    <p style="color: #666; font-size: 13px; margin: 0; line-height: 1.8;">
+                      ✅ Save your QR code for check-in<br/>
+                      ✅ Join our community channels<br/>
+                      ✅ Get ready to innovate!
+                    </p>
                   </div>
                 </div>
 
                 <!-- Footer -->
-                <div style="background: #0f172a; padding: 24px 30px; text-align: center; border-top: 1px solid #1e293b;">
-                  <p style="color: #94a3b8; font-size: 13px; margin: 0 0 4px 0; font-weight: 600;">ALX Hospitality Hackathon 2026</p>
-                  <p style="color: #475569; font-size: 12px; margin: 0;">Addis Ababa, Ethiopia</p>
-                  <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #1e293b;">
-                    <a href="https://hospitalityhackathon.et" style="color: #2563eb; font-size: 12px; text-decoration: none; font-weight: 600;">hospitalityhackathon.et</a>
-                  </div>
+                <div style="background: #000; padding: 20px 30px; text-align: center;">
+                  <p style="color: #999; font-size: 12px; margin: 0 0 4px 0; font-weight: 600;">Hospitality Hackathon 2026 · Addis Ababa</p>
+                  <a href="https://hospitalityhackathon.et" style="color: #DC2626; font-size: 12px; text-decoration: none; font-weight: 600;">hospitalityhackathon.et</a>
                 </div>
 
               </div>
@@ -267,87 +253,73 @@ export default {
                   <head>
                     <meta charset="utf-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>ALX Hackathon Registration</title>
+                    <title>Hospitality Hackathon Registration</title>
                   </head>
-                  <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #0a0a0f;">
-                    <div style="max-width: 600px; margin: 0 auto;">
+                  <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f5f5f5;">
+                    <div style="max-width: 600px; margin: 0 auto; overflow: hidden;">
                       
-                      <!-- Header with Logo -->
-                      <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); padding: 40px 20px 30px; text-align: center; border-bottom: 3px solid #2563eb;">
-                        <div style="margin-bottom: 16px;">
-                          <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/favicon.ico" alt="ALX Hackathon" style="width: 56px; height: 56px; border-radius: 12px;" />
-                        </div>
-                        <h1 style="color: #ffffff; margin: 0 0 6px 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px;">ALX Hospitality Hackathon</h1>
-                        <p style="color: #94a3b8; margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">2026 · Addis Ababa</p>
+                      <!-- Header — black with logo -->
+                      <div style="background: #000000; padding: 32px 30px; text-align: center;">
+                        <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl-clean.png" alt="Hospitality Hackathon" style="height: 48px; margin-bottom: 12px; filter: invert(1);" />
+                        <p style="color: #999999; margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;">Hospitality Hackathon 2026</p>
                       </div>
 
-                      <!-- Success Banner -->
-                      <div style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 20px 30px; text-align: center;">
-                        <div style="display: inline-block; margin-bottom: 8px;">
-                          <span style="font-size: 28px;">🤝</span>
-                        </div>
-                        <h2 style="color: #ffffff; margin: 0 0 4px 0; font-size: 20px; font-weight: 700;">Welcome Aboard, ${member.fullName}!</h2>
-                        <p style="color: #bfdbfe; margin: 0; font-size: 14px;">You've been registered as a team member</p>
+                      <!-- Red accent banner -->
+                      <div style="background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); padding: 24px 30px; text-align: center;">
+                        <h1 style="color: #ffffff; margin: 0 0 4px 0; font-size: 22px; font-weight: 700;">Welcome Aboard, ${member.fullName}! 🤝</h1>
+                        <p style="color: #fecaca; margin: 0; font-size: 14px;">You've been registered as a team member</p>
                       </div>
 
-                      <!-- Content Card -->
-                      <div style="background-color: #ffffff; padding: 0; margin: 0;">
+                      <!-- White content area -->
+                      <div style="background: #ffffff; padding: 30px;">
                         
-                        <!-- Ticket Details -->
-                        <div style="padding: 30px 30px 25px;">
-                          <table style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                              <td style="padding: 12px 16px; background: #f8fafc; border-radius: 8px 8px 0 0; border-bottom: 1px solid #e2e8f0;">
-                                <span style="color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Team</span><br/>
-                                <span style="color: #0f172a; font-size: 15px; font-weight: 600;">${data.teamName}</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
-                                <span style="color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Ticket Number</span><br/>
-                                <span style="color: #0f172a; font-size: 20px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${memberTicket}</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="padding: 12px 16px; background: #f8fafc; border-radius: 0 0 8px 8px;">
-                                <span style="color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Role</span><br/>
-                                <span style="color: #0f172a; font-size: 15px; font-weight: 600;">${member.roleType}</span>
-                              </td>
-                            </tr>
-                          </table>
-                        </div>
+                        <!-- Ticket details -->
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+                          <tr>
+                            <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
+                              <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
+                              <span style="color: #000; font-size: 15px; font-weight: 600;">${data.teamName}</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
+                              <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket Number</span><br/>
+                              <span style="color: #000; font-size: 18px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${memberTicket}</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626;">
+                              <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
+                              <span style="color: #000; font-size: 15px; font-weight: 600;">${member.roleType}</span>
+                            </td>
+                          </tr>
+                        </table>
 
-                        <!-- QR Code Section -->
-                        <div style="text-align: center; padding: 0 30px 30px;">
-                          <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 12px; padding: 24px; display: inline-block;">
-                            <p style="color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin: 0 0 16px 0;">Your Check-in QR Code</p>
-                            <div style="background: #ffffff; padding: 12px; border-radius: 8px; display: inline-block;">
-                              <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(memberQrData)}&size=180x180&color=0f172a" alt="Check-in QR Code" style="width: 180px; height: 180px; display: block;"/>
+                        <!-- QR Code -->
+                        <div style="text-align: center; margin-bottom: 24px;">
+                          <div style="background: #000; border-radius: 12px; padding: 20px; display: inline-block;">
+                            <p style="color: #999; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin: 0 0 12px 0;">Check-in QR Code</p>
+                            <div style="background: #fff; padding: 10px; border-radius: 8px; display: inline-block;">
+                              <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(memberQrData)}&size=160x160&color=000000" alt="QR Code" style="width: 160px; height: 160px; display: block;"/>
                             </div>
-                            <p style="color: #64748b; font-size: 12px; margin: 14px 0 0 0;">Screenshot or save this code for event day</p>
                           </div>
                         </div>
 
-                        <!-- What's Next -->
-                        <div style="padding: 0 30px 30px;">
-                          <div style="border-left: 3px solid #2563eb; padding-left: 16px;">
-                            <h3 style="color: #0f172a; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">What's Next?</h3>
-                            <p style="color: #64748b; font-size: 13px; margin: 0; line-height: 1.7;">
-                              ✅ Save your QR code for check-in<br/>
-                              ✅ Coordinate with your team lead<br/>
-                              ✅ Get ready to innovate together!
-                            </p>
-                          </div>
+                        <!-- Next steps -->
+                        <div style="border-left: 3px solid #DC2626; padding-left: 16px; margin-bottom: 8px;">
+                          <h3 style="color: #000; font-size: 14px; font-weight: 700; margin: 0 0 6px 0;">What's Next?</h3>
+                          <p style="color: #666; font-size: 13px; margin: 0; line-height: 1.8;">
+                            ✅ Save your QR code for check-in<br/>
+                            ✅ Coordinate with your team lead<br/>
+                            ✅ Get ready to innovate together!
+                          </p>
                         </div>
                       </div>
 
                       <!-- Footer -->
-                      <div style="background: #0f172a; padding: 24px 30px; text-align: center; border-top: 1px solid #1e293b;">
-                        <p style="color: #94a3b8; font-size: 13px; margin: 0 0 4px 0; font-weight: 600;">ALX Hospitality Hackathon 2026</p>
-                        <p style="color: #475569; font-size: 12px; margin: 0;">Addis Ababa, Ethiopia</p>
-                        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #1e293b;">
-                          <a href="https://hospitalityhackathon.et" style="color: #2563eb; font-size: 12px; text-decoration: none; font-weight: 600;">hospitalityhackathon.et</a>
-                        </div>
+                      <div style="background: #000; padding: 20px 30px; text-align: center;">
+                        <p style="color: #999; font-size: 12px; margin: 0 0 4px 0; font-weight: 600;">Hospitality Hackathon 2026 · Addis Ababa</p>
+                        <a href="https://hospitalityhackathon.et" style="color: #DC2626; font-size: 12px; text-decoration: none; font-weight: 600;">hospitalityhackathon.et</a>
                       </div>
 
                     </div>
