@@ -3,6 +3,8 @@ export default {
     const origin = request.headers.get('Origin') || '';
     const allowedOrigins = [
       'https://hospitality-hackathon-2026.vercel.app',
+      'https://hospitalityhackathon.et',
+      'https://www.hospitalityhackathon.et',
     ];
     const corsOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
 
@@ -152,21 +154,20 @@ export default {
 
         let emailErrors = [];
 
-        // Send email using Brevo (formerly Sendinblue)
-        if (env.BREVO_API_KEY) {
+        // Send email using Resend
+        if (env.RESEND_API_KEY) {
           try {
-            const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+            const emailResponse = await fetch('https://api.resend.com/emails', {
               method: 'POST',
               headers: {
-                'api-key': env.BREVO_API_KEY,
+                'Authorization': `Bearer ${env.RESEND_API_KEY}`,
                 'Content-Type': 'application/json',
-                'accept': 'application/json',
               },
               body: JSON.stringify({
-                sender: { name: 'ALX Hackathon', email: 'noreply@hospitalityhackathon.et' },
-                to: [{ email: data.email, name: data.fullName }],
+                from: 'ALX Hackathon <noreply@hospitalityhackathon.et>',
+                to: [data.email],
                 subject: 'ALX Hackathon Registration Confirmation',
-                htmlContent: emailHtml,
+                html: emailHtml,
               }),
             });
 
@@ -277,21 +278,20 @@ export default {
                 </html>
               `;
 
-              // Send email to team member using Brevo
-              if (env.BREVO_API_KEY) {
+              // Send email to team member using Resend
+              if (env.RESEND_API_KEY) {
                 try {
-                  const memberEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+                  const memberEmailResponse = await fetch('https://api.resend.com/emails', {
                     method: 'POST',
                     headers: {
-                      'api-key': env.BREVO_API_KEY,
+                      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
                       'Content-Type': 'application/json',
-                      'accept': 'application/json',
                     },
                     body: JSON.stringify({
-                      sender: { name: 'ALX Hackathon', email: 'noreply@hospitalityhackathon.et' },
-                      to: [{ email: member.email, name: member.fullName }],
+                      from: 'ALX Hackathon <noreply@hospitalityhackathon.et>',
+                      to: [member.email],
                       subject: 'ALX Hackathon Team Registration Confirmation',
-                      htmlContent: memberEmailHtml,
+                      html: memberEmailHtml,
                     }),
                   });
 
