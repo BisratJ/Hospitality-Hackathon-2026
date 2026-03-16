@@ -29,8 +29,18 @@ const btnGradient = "linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 10
 const btnShadow = "0 4px 14px rgba(220, 38, 38, 0.35)"
 const glassCard = "rounded-2xl border border-black/[0.06] bg-white/60 shadow-sm hover:shadow-md hover:bg-white/80 transition-all duration-300 backdrop-blur-sm"
 
+const PersonPlaceholder = ({ size = "w-20 h-20" }) => (
+  <div className={`${size} rounded-full bg-neutral-100 border-2 border-neutral-200 flex items-center justify-center`}>
+    <svg className="w-1/2 h-1/2 text-neutral-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+  </div>
+)
+
 export default function PastEvents() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const [activeJuryTab, setActiveJuryTab] = useState("judges")
   useEffect(() => { setIsLoaded(true) }, [])
 
   const highlights = [
@@ -59,20 +69,43 @@ export default function PastEvents() {
 
   const judges2025 = [
     {
-      name: "Mr. Nael Hailemariam",
-      role: "Co-Founder and CEO, Chapa",
-      image: "/assets/images/Nael.jpeg",
+      name: "Yasser Bagersh",
+      role: "Managing Director, Cactus Communications",
+      image: null,
     },
     {
-      name: "Mr. Israel Goytom",
-      role: "CTO and Co-Founder, Chapa",
-      image: "/assets/images/Israel.jpeg",
+      name: "Tadios Tefera",
+      role: "CTO, MMCY Tech",
+      image: "/assets/images/Tadiwos.jpeg",
     },
     {
-      name: "Mr. Amaha Bekele",
-      role: "Partner, Consulting Leader for East Africa at Deloitte",
-      image: "/assets/images/Amaha.jpeg",
+      name: "Dr. Temesgen Gebrehiowt",
+      role: "Founder & CEO, Etta Solutions",
+      image: null,
     },
+  ]
+
+  const panelists2025 = [
+    {
+      name: "Misikir Adane",
+      role: "CEO & Co-Founder, Muyalogy",
+      image: null,
+    },
+    {
+      name: "Yoadan Tilahun",
+      role: "Founder & CEO, Flawless Events",
+      image: "/assets/images/Yoadan.jpeg",
+    },
+    {
+      name: "Helinna Ayalew",
+      role: "Moderator",
+      image: "/assets/images/Helinna.jpeg",
+    },
+  ]
+
+  const juryTabs = [
+    { key: "judges", label: "Judges" },
+    { key: "panelists", label: "Panelists" },
   ]
 
   const timeline = [
@@ -276,19 +309,48 @@ export default function PastEvents() {
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 border border-neutral-200/60 text-neutral-500 text-xs font-medium tracking-wide uppercase mb-4 shadow-sm">
               <Award className="h-3.5 w-3.5" />
-              2025 Jury
+              2025 Jury & Panel
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight mb-3">Past Judges</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight mb-3">Meet Our Past Judges and Panelists</h2>
+            <p className="text-base text-neutral-500 max-w-2xl mx-auto">
+              The esteemed professionals who evaluated solutions and shared insights during the inaugural hackathon.
+            </p>
           </div>
 
+          {/* Tab Switcher */}
+          <div className="flex justify-center mb-10">
+            <div className="inline-flex bg-neutral-100 rounded-lg p-1 border border-neutral-200">
+              {juryTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveJuryTab(tab.key)}
+                  className={`relative py-2 px-6 rounded-md text-sm font-medium transition-all duration-200 ${
+                    activeJuryTab === tab.key
+                      ? "bg-white text-neutral-900 shadow-sm border border-neutral-200"
+                      : "text-neutral-500 hover:text-neutral-700"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Tabbed Content */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {judges2025.map((judge, i) => (
+            {(activeJuryTab === "judges" ? judges2025 : panelists2025).map((person, i) => (
               <div key={i} className={`${glassCard} p-6 text-center`}>
-                <div className="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden ring-2 ring-neutral-100">
-                  <img src={judge.image} alt={judge.name} className="w-full h-full object-cover" />
+                <div className="mb-4 flex justify-center">
+                  {person.image ? (
+                    <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-neutral-100">
+                      <img src={person.image} alt={person.name} className="w-full h-full object-cover" />
+                    </div>
+                  ) : (
+                    <PersonPlaceholder />
+                  )}
                 </div>
-                <h3 className="text-base font-semibold text-neutral-900 mb-1">{judge.name}</h3>
-                <p className="text-sm font-medium" style={{ color: "#D4952C" }}>{judge.role}</p>
+                <h3 className="text-base font-semibold text-neutral-900 mb-1">{person.name}</h3>
+                <p className="text-sm font-medium" style={{ color: "#D4952C" }}>{person.role}</p>
               </div>
             ))}
           </div>
