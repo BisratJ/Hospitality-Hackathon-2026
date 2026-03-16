@@ -359,15 +359,16 @@ export default {
               await env.DB.prepare(`
                 INSERT INTO team_members (
                   userId, fullName, email, phoneNumber,
-                  roleType, ticketNumber
-                ) VALUES (?, ?, ?, ?, ?, ?)
+                  roleType, ticketNumber, alxAffiliation
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
               `).bind(
                 userId,
                 member.fullName,
                 member.email,
                 member.phoneNumber || '',
                 member.roleType,
-                memberTicket
+                memberTicket,
+                member.alxAffiliation || ''
               ).run();
             }
           }
@@ -690,7 +691,7 @@ export default {
             csv += `"Lead","${u.id}","${(u.fullName||'').replace(/"/g,'""')}","${u.email}","${u.phoneNumber}","${u.alxAffiliation}","${u.registrationType}","${(u.teamName||'').replace(/"/g,'""')}","${u.roleType}","${(u.strengths||'').replace(/"/g,'""')}","${u.ticketNumber}","${u.checkInStatus ? 'Yes' : 'No'}","${u.checkInTime || ''}"\n`;
           }
           for (const m of (teamMembers?.results || [])) {
-            csv += `"Member","${m.id}","${(m.fullName||'').replace(/"/g,'""')}","${m.email}","${m.phoneNumber||''}","","team","","${m.roleType}","","${m.ticketNumber}","${m.checkInStatus ? 'Yes' : 'No'}","${m.checkInTime || ''}"\n`;
+            csv += `"Member","${m.id}","${(m.fullName||'').replace(/"/g,'""')}","${m.email}","${m.phoneNumber||''}","${m.alxAffiliation||''}","team","","${m.roleType}","","${m.ticketNumber}","${m.checkInStatus ? 'Yes' : 'No'}","${m.checkInTime || ''}"\n`;
           }
 
           return new Response(csv, {

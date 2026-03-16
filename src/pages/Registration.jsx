@@ -14,7 +14,7 @@ const Registration = () => {
     teamName: "",
     strengths: "",
     roleType: "",
-    teamMembers: [{ fullName: "", email: "", phoneNumber: "", roleType: "" }],
+    teamMembers: [{ fullName: "", email: "", phoneNumber: "", roleType: "", alxAffiliation: "" }],
   });
 
   const [status, setStatus] = useState({
@@ -41,7 +41,7 @@ const Registration = () => {
       teamName: "",
       strengths: "",
       roleType: "",
-      teamMembers: [{ fullName: "", email: "", phoneNumber: "", roleType: "" }],
+      teamMembers: [{ fullName: "", email: "", phoneNumber: "", roleType: "", alxAffiliation: "" }],
     });
     setStatus({ type: "", message: "" });
     setFieldErrors({});
@@ -96,7 +96,7 @@ const Registration = () => {
     if (formData.teamMembers.length < 5) {
       setFormData((prevState) => ({
         ...prevState,
-        teamMembers: [...prevState.teamMembers, { fullName: "", email: "", phoneNumber: "", roleType: "" }],
+        teamMembers: [...prevState.teamMembers, { fullName: "", email: "", phoneNumber: "", roleType: "", alxAffiliation: "" }],
       }));
     } else {
       setStatus({
@@ -180,6 +180,11 @@ const Registration = () => {
 
           if (!member.roleType) {
             newErrors[`teamMember-${index}-roleType`] = "Team member role is required";
+            isValid = false;
+          }
+
+          if (!member.alxAffiliation) {
+            newErrors[`teamMember-${index}-alxAffiliation`] = "ALX Affiliation is required";
             isValid = false;
           }
         }
@@ -293,7 +298,7 @@ const Registration = () => {
           teamName: "",
           strengths: "",
           roleType: "",
-          teamMembers: [{ fullName: "", email: "", phoneNumber: "", roleType: "" }],
+          teamMembers: [{ fullName: "", email: "", phoneNumber: "", roleType: "", alxAffiliation: "" }],
         });
       } else {
         // Check for different types of errors
@@ -800,6 +805,30 @@ const Registration = () => {
                         </select>
                         {fieldErrors[`teamMember-${index}-roleType`] && (
                           <p className="mt-1 text-sm font-medium" style={{ color: "#DC2626" }}>{fieldErrors[`teamMember-${index}-roleType`]}</p>
+                        )}
+                      </div>
+                      <div>
+                        <label htmlFor={`member-${index}-alxAffiliation`} className="block text-sm font-medium text-neutral-300">
+                          ALX Affiliation *
+                        </label>
+                        <select
+                          name="alxAffiliation"
+                          id={`member-${index}-alxAffiliation`}
+                          value={member.alxAffiliation}
+                          onChange={(e) => handleTeamMemberChange(index, e)}
+                          className={`mt-1 block w-full rounded-lg border transition-colors duration-200 ${
+                            fieldErrors[`teamMember-${index}-alxAffiliation`]
+                              ? "border-red-500/50 bg-red-900/20 text-white focus:ring-red-500 focus:border-red-500"
+                              : "border-white/10 bg-white/5 text-white placeholder-neutral-500 focus:ring-red-500 focus:border-red-500"
+                          } shadow-sm sm:text-sm p-2.5`}
+                        >
+                          <option value="">Select affiliation</option>
+                          <option value="Learner">Learner</option>
+                          <option value="Graduate">Graduate</option>
+                          <option value="Neither">Neither</option>
+                        </select>
+                        {fieldErrors[`teamMember-${index}-alxAffiliation`] && (
+                          <p className="mt-1 text-sm font-medium" style={{ color: "#DC2626" }}>{fieldErrors[`teamMember-${index}-alxAffiliation`]}</p>
                         )}
                       </div>
                     </div>
