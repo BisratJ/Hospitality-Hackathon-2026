@@ -549,6 +549,182 @@ export default {
         );
       }
 
+      // ═══════════════════════════════════════════════════════════
+      // ADMIN API ENDPOINTS
+      // ═══════════════════════════════════════════════════════════
+
+      // Helper: validate admin auth
+      const validateAdmin = () => {
+        const authHeader = request.headers.get('Authorization') || '';
+        if (!authHeader.startsWith('Bearer ')) return false;
+        try {
+          const token = authHeader.slice(7);
+          const decoded = atob(token);
+          const [username, password] = decoded.split(':');
+          return (
+            username === (env.ADMIN_USERNAME || 'admin') &&
+            password === (env.ADMIN_PASSWORD || 'hackathon2026')
+          );
+        } catch {
+          return false;
+        }
+      };
+
+      // POST /api/admin/login
+      if (path === '/api/admin/login' && request.method === 'POST') {
+        const data = await request.json();
+        const username = data.username || '';
+        const password = data.password || '';
+        const validUser = env.ADMIN_USERNAME || 'admin';
+        const validPass = env.ADMIN_PASSWORD || 'hackathon2026';
+
+        if (username === validUser && password === validPass) {
+          return new Response(
+            JSON.stringify({ success: true, token: btoa(`${username}:${password}`) }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+        return new Response(
+          JSON.stringify({ error: 'Invalid credentials' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // All other admin endpoints require auth
+      if (path.startsWith('/api/admin/')) {
+        if (!validateAdmin()) {
+          return new Response(
+            JSON.stringify({ error: 'Unauthorized' }),
+            { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        // GET /api/admin/stats
+        if (path === '/api/admin/stats' && request.method === 'GET') {
+          const totalTeams = await env.DB.prepare(
+            "SELECT COUNT(*) as count FROM users WHERE registrationType = 'team'"
+          ).first();
+          const totalIndividuals = await env.DB.prepare(
+            "SELECT COUNT(*) as count FROM users WHERE registrationType = 'individual'"
+          ).first();
+          const totalUsers = await env.DB.prepare(
+            "SELECT COUNT(*) as count FROM users"
+          ).first();
+          const totalTeamMembers = await env.DB.prepare(
+            "SELECT COUNT(*) as count FROM team_members"
+          ).first();
+          const checkedInUsers = await env.DB.prepare(
+            "SELECT COUNT(*) as count FROM users WHERE checkInStatus = 1"
+          ).first();
+          const checkedInMembers = await env.DB.prepare(
+            "SELECT COUNT(*) as count FROM team_members WHERE checkInStatus = 1"
+          ).first();
+
+          return new Response(
+            JSON.stringify({
+              totalTeams: totalTeams?.count || 0,
+              totalIndividuals: totalIndividuals?.count || 0,
+              totalRegistrations: totalUsers?.count || 0,
+              totalTeamMembers: totalTeamMembers?.count || 0,
+              totalParticipants: (totalUsers?.count || 0) + (totalTeamMembers?.count || 0),
+              checkedInUsers: checkedInUsers?.count || 0,
+              checkedInMembers: checkedInMembers?.count || 0,
+              totalCheckedIn: (checkedInUsers?.count || 0) + (checkedInMembers?.count || 0),
+            }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        // GET /api/admin/registrations
+        if (path === '/api/admin/registrations' && request.method === 'GET') {
+          const users = await env.DB.prepare(
+            "SELECT * FROM users ORDER BY id DESC"
+          ).all();
+          const teamMembers = await env.DB.prepare(
+            "SELECT * FROM team_members ORDER BY userId, id"
+          ).all();
+
+          // Group team members by userId
+          const membersByUser = {};
+          for (const m of (teamMembers?.results || [])) {
+            if (!membersByUser[m.userId]) membersByUser[m.userId] = [];
+            membersByUser[m.userId].push(m);
+          }
+
+          const result = (users?.results || []).map(u => ({
+            ...u,
+            teamMembers: membersByUser[u.id] || [],
+          }));
+
+          return new Response(
+            JSON.stringify(result),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        // GET /api/admin/checkins
+        if (path === '/api/admin/checkins' && request.method === 'GET') {
+          const checkedUsers = await env.DB.prepare(
+            "SELECT * FROM users WHERE checkInStatus = 1 ORDER BY checkInTime DESC"
+          ).all();
+          const checkedMembers = await env.DB.prepare(
+            "SELECT * FROM team_members WHERE checkInStatus = 1 ORDER BY checkInTime DESC"
+          ).all();
+
+          return new Response(
+            JSON.stringify({
+              users: checkedUsers?.results || [],
+              teamMembers: checkedMembers?.results || [],
+            }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        // GET /api/admin/export/registrations — CSV
+        if (path === '/api/admin/export/registrations' && request.method === 'GET') {
+          const users = await env.DB.prepare("SELECT * FROM users ORDER BY id").all();
+          const teamMembers = await env.DB.prepare("SELECT * FROM team_members ORDER BY userId, id").all();
+
+          let csv = 'Type,ID,FullName,Email,Phone,ALXAffiliation,RegistrationType,TeamName,Role,Strengths,TicketNumber,CheckedIn,CheckInTime\n';
+          for (const u of (users?.results || [])) {
+            csv += `"Lead","${u.id}","${(u.fullName||'').replace(/"/g,'""')}","${u.email}","${u.phoneNumber}","${u.alxAffiliation}","${u.registrationType}","${(u.teamName||'').replace(/"/g,'""')}","${u.roleType}","${(u.strengths||'').replace(/"/g,'""')}","${u.ticketNumber}","${u.checkInStatus ? 'Yes' : 'No'}","${u.checkInTime || ''}"\n`;
+          }
+          for (const m of (teamMembers?.results || [])) {
+            csv += `"Member","${m.id}","${(m.fullName||'').replace(/"/g,'""')}","${m.email}","${m.phoneNumber||''}","","team","","${m.roleType}","","${m.ticketNumber}","${m.checkInStatus ? 'Yes' : 'No'}","${m.checkInTime || ''}"\n`;
+          }
+
+          return new Response(csv, {
+            headers: {
+              ...corsHeaders,
+              'Content-Type': 'text/csv',
+              'Content-Disposition': 'attachment; filename="registrations.csv"',
+            },
+          });
+        }
+
+        // GET /api/admin/export/checkins — CSV (checked-in only)
+        if (path === '/api/admin/export/checkins' && request.method === 'GET') {
+          const users = await env.DB.prepare("SELECT * FROM users WHERE checkInStatus = 1 ORDER BY checkInTime").all();
+          const members = await env.DB.prepare("SELECT * FROM team_members WHERE checkInStatus = 1 ORDER BY checkInTime").all();
+
+          let csv = 'Type,ID,FullName,Email,Phone,TeamName,Role,TicketNumber,CheckInTime\n';
+          for (const u of (users?.results || [])) {
+            csv += `"Lead","${u.id}","${(u.fullName||'').replace(/"/g,'""')}","${u.email}","${u.phoneNumber}","${(u.teamName||'').replace(/"/g,'""')}","${u.roleType}","${u.ticketNumber}","${u.checkInTime}"\n`;
+          }
+          for (const m of (members?.results || [])) {
+            csv += `"Member","${m.id}","${(m.fullName||'').replace(/"/g,'""')}","${m.email}","${m.phoneNumber||''}","","${m.roleType}","${m.ticketNumber}","${m.checkInTime}"\n`;
+          }
+
+          return new Response(csv, {
+            headers: {
+              ...corsHeaders,
+              'Content-Type': 'text/csv',
+              'Content-Disposition': 'attachment; filename="checkins.csv"',
+            },
+          });
+        }
+      }
+
       return new Response(
         JSON.stringify({ error: 'Not Found' }),
         {
