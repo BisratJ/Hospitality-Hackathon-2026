@@ -56,9 +56,9 @@ export default function Navbar() {
         >
           <div className="flex h-14 items-center justify-between">
             {/* Brand */}
-            <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-              <Terminal className="h-5 w-5" style={{ color: "#DC2626" }} />
-              <span className="hidden font-bold text-sm sm:inline-block text-slate-800">
+            <Link to="/" className="flex items-center gap-2 flex-shrink-0 min-w-0">
+              <Terminal className="h-5 w-5 flex-shrink-0" style={{ color: "#DC2626" }} />
+              <span className="font-bold text-sm text-slate-800 truncate max-w-[160px] sm:max-w-none">
                 <span style={{ color: "#DC2626" }}>&lt;</span>
                 Hospitality
                 <span style={{ color: "#DC2626" }}>Hackathon</span>
@@ -98,7 +98,7 @@ export default function Navbar() {
             {/* Mobile/Tablet Menu Button — visible below lg */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="nav:hidden inline-flex items-center justify-center rounded-lg w-9 h-9 text-slate-600 hover:bg-white/50 transition-colors"
+              className="nav:hidden inline-flex items-center justify-center rounded-xl w-11 h-11 text-slate-600 hover:bg-white/50 transition-colors flex-shrink-0"
               aria-label="Toggle menu"
             >
               <span className="relative w-5 h-5">
@@ -129,7 +129,7 @@ export default function Navbar() {
                   key={route.path}
                   to={route.path}
                   className={cn(
-                    "flex items-center px-3 py-2.5 rounded-xl text-sm font-medium transition-all",
+                    "flex items-center px-3 py-3 rounded-xl text-sm font-medium transition-all min-h-[48px]",
                     pathname === route.path
                       ? "text-slate-900 bg-white/70 shadow-sm"
                       : "text-slate-600 hover:text-slate-900 hover:bg-white/40",

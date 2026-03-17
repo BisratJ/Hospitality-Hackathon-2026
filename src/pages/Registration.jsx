@@ -432,12 +432,13 @@ const Registration = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.06]" style={{ background: "radial-gradient(circle, #DC2626 0%, transparent 70%)" }} />
       <div className="pt-10 sm:pt-14 lg:pt-16 relative z-10" />
       <div
-        className="max-w-3xl mx-auto rounded-2xl border border-white/10 shadow-xl p-8 sm:p-10 relative z-10"
+        className="max-w-3xl mx-auto rounded-2xl border border-white/10 shadow-xl p-5 sm:p-8 lg:p-10 relative z-10"
         style={{
           background: "rgba(255, 255, 255, 0.08)",
           backdropFilter: "blur(20px) saturate(180%)",
           WebkitBackdropFilter: "blur(20px) saturate(180%)",
-          boxShadow: "0 0 0 0.5px rgba(255,255,255,0.08), 0 8px 40px rgba(0,0,0,0.4)"
+          boxShadow: "0 0 0 0.5px rgba(255,255,255,0.08), 0 8px 40px rgba(0,0,0,0.4)",
+          colorScheme: "dark"
         }}
       >
         <h2 className="text-3xl font-bold text-center text-white mb-2">Register for Hospitality Hackathon 2026</h2>
@@ -600,22 +601,21 @@ const Registration = () => {
                 <label htmlFor="alxAffiliation" className="block text-sm font-medium text-neutral-300">
                   ALX Affiliation *
                 </label>
-                <select
-                  name="alxAffiliation"
-                  id="alxAffiliation"
-                  value={formData.alxAffiliation}
-                  onChange={handleChange}
-                  className={`mt-1 block w-full rounded-lg border transition-colors duration-200 ${
-                    fieldErrors.alxAffiliation
-                      ? "border-red-500/50 bg-red-900/20 text-white focus:ring-red-500 focus:border-red-500"
-                      : "border-white/10 bg-white/5 text-white placeholder-neutral-500 focus:ring-red-500 focus:border-red-500"
-                  } shadow-sm sm:text-sm p-2.5 hover:border-neutral-400`}
-                >
-                  <option value="">Select your affiliation</option>
-                  <option value="Learner">Learner</option>
-                  <option value="Graduate">Graduate</option>
-                  <option value="Neither">Neither</option>
-                </select>
+                <div className="dark-select-wrapper mt-1">
+                  <select
+                    name="alxAffiliation"
+                    id="alxAffiliation"
+                    value={formData.alxAffiliation}
+                    onChange={handleChange}
+                    className={`dark-form-field block w-full rounded-lg border transition-colors duration-200 shadow-sm sm:text-sm p-2.5 pr-8 hover:border-neutral-400 ${fieldErrors.alxAffiliation ? 'error' : ''}`}
+                    style={{ colorScheme: 'dark' }}
+                  >
+                    <option value="">Select your affiliation</option>
+                    <option value="Learner">Learner</option>
+                    <option value="Graduate">Graduate</option>
+                    <option value="Neither">Neither</option>
+                  </select>
+                </div>
                 {fieldErrors.alxAffiliation && (
                   <p className="mt-1 text-sm font-medium" style={{ color: "#DC2626" }}>{fieldErrors.alxAffiliation}</p>
                 )}
@@ -646,24 +646,23 @@ const Registration = () => {
                 <label htmlFor="roleType" className="block text-sm font-medium text-neutral-300">
                   Role Type *
                 </label>
-                <select
-                  name="roleType"
-                  id="roleType"
-                  value={formData.roleType}
-                  onChange={handleChange}
-                  className={`mt-1 block w-full rounded-lg border transition-colors duration-200 ${
-                    fieldErrors.roleType
-                      ? "border-red-500/50 bg-red-900/20 text-white focus:ring-red-500 focus:border-red-500"
-                      : "border-white/10 bg-white/5 text-white placeholder-neutral-500 focus:ring-red-500 focus:border-red-500"
-                  } shadow-sm sm:text-sm p-2.5 hover:border-neutral-400`}
-                >
-                  <option value="">Select your role</option>
-                  <option value="Developer">Developer</option>
-                  <option value="Creative">Creative</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Entrepreneur">Entrepreneur</option>
-                  <option value="Other">Other</option>
-                </select>
+                <div className="dark-select-wrapper mt-1">
+                  <select
+                    name="roleType"
+                    id="roleType"
+                    value={formData.roleType}
+                    onChange={handleChange}
+                    className={`dark-form-field block w-full rounded-lg border transition-colors duration-200 shadow-sm sm:text-sm p-2.5 pr-8 hover:border-neutral-400 ${fieldErrors.roleType ? 'error' : ''}`}
+                    style={{ colorScheme: 'dark' }}
+                  >
+                    <option value="">Select your role</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Creative">Creative</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Entrepreneur">Entrepreneur</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
                 {fieldErrors.roleType && <p className="mt-1 text-sm font-medium" style={{ color: "#DC2626" }}>{fieldErrors.roleType}</p>}
               </div>
             </div>
@@ -785,16 +784,14 @@ const Registration = () => {
                         <label htmlFor={`member-${index}-role`} className="block text-sm font-medium text-neutral-300">
                           Role *
                         </label>
-                        <select
+                        <div className="dark-select-wrapper mt-1">
+                          <select
                           name="roleType"
                           id={`member-${index}-role`}
                           value={member.roleType}
                           onChange={(e) => handleTeamMemberChange(index, e)}
-                          className={`mt-1 block w-full rounded-lg border transition-colors duration-200 ${
-                            fieldErrors[`teamMember-${index}-roleType`]
-                              ? "border-red-500/50 bg-red-900/20 text-white focus:ring-red-500 focus:border-red-500"
-                              : "border-white/10 bg-white/5 text-white placeholder-neutral-500 focus:ring-red-500 focus:border-red-500"
-                          } shadow-sm sm:text-sm p-2.5`}
+                          className={`dark-form-field block w-full rounded-lg border transition-colors duration-200 shadow-sm sm:text-sm p-2.5 pr-8 ${fieldErrors[`teamMember-${index}-roleType`] ? 'error' : ''}`}
+                          style={{ colorScheme: 'dark' }}
                         >
                           <option value="">Select role</option>
                           <option value="Developer">Developer</option>
@@ -803,6 +800,7 @@ const Registration = () => {
                           <option value="Entrepreneur">Entrepreneur</option>
                           <option value="Other">Other</option>
                         </select>
+                        </div>
                         {fieldErrors[`teamMember-${index}-roleType`] && (
                           <p className="mt-1 text-sm font-medium" style={{ color: "#DC2626" }}>{fieldErrors[`teamMember-${index}-roleType`]}</p>
                         )}
@@ -811,22 +809,21 @@ const Registration = () => {
                         <label htmlFor={`member-${index}-alxAffiliation`} className="block text-sm font-medium text-neutral-300">
                           ALX Affiliation *
                         </label>
-                        <select
-                          name="alxAffiliation"
-                          id={`member-${index}-alxAffiliation`}
-                          value={member.alxAffiliation}
-                          onChange={(e) => handleTeamMemberChange(index, e)}
-                          className={`mt-1 block w-full rounded-lg border transition-colors duration-200 ${
-                            fieldErrors[`teamMember-${index}-alxAffiliation`]
-                              ? "border-red-500/50 bg-red-900/20 text-white focus:ring-red-500 focus:border-red-500"
-                              : "border-white/10 bg-white/5 text-white placeholder-neutral-500 focus:ring-red-500 focus:border-red-500"
-                          } shadow-sm sm:text-sm p-2.5`}
-                        >
-                          <option value="">Select affiliation</option>
-                          <option value="Learner">Learner</option>
-                          <option value="Graduate">Graduate</option>
-                          <option value="Neither">Neither</option>
-                        </select>
+                        <div className="dark-select-wrapper mt-1">
+                          <select
+                            name="alxAffiliation"
+                            id={`member-${index}-alxAffiliation`}
+                            value={member.alxAffiliation}
+                            onChange={(e) => handleTeamMemberChange(index, e)}
+                            className={`dark-form-field block w-full rounded-lg border transition-colors duration-200 shadow-sm sm:text-sm p-2.5 pr-8 ${fieldErrors[`teamMember-${index}-alxAffiliation`] ? 'error' : ''}`}
+                            style={{ colorScheme: 'dark' }}
+                          >
+                            <option value="">Select affiliation</option>
+                            <option value="Learner">Learner</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Neither">Neither</option>
+                          </select>
+                        </div>
                         {fieldErrors[`teamMember-${index}-alxAffiliation`] && (
                           <p className="mt-1 text-sm font-medium" style={{ color: "#DC2626" }}>{fieldErrors[`teamMember-${index}-alxAffiliation`]}</p>
                         )}

@@ -550,6 +550,34 @@ export default {
         );
       }
 
+      // ─── Admin: Undo check-in ───────────────────────────────────
+      if (method === 'PUT' && path.startsWith('/api/admin/undo-checkin/')) {
+        const authHeader = request.headers.get('Authorization') || '';
+        if (!authHeader.startsWith('Bearer ')) {
+          return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+        const token = authHeader.slice(7);
+        const expected = btoa(`${env.ADMIN_USERNAME}:${env.ADMIN_PASSWORD}`);
+        if (token !== expected) {
+          return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+
+        const ticketNumber = path.split('/').pop();
+        await env.DB.prepare(`UPDATE users SET checkInStatus = 0, checkInTime = NULL WHERE ticketNumber = ?`).bind(ticketNumber).run();
+        await env.DB.prepare(`UPDATE team_members SET checkInStatus = 0, checkInTime = NULL WHERE ticketNumber = ?`).bind(ticketNumber).run();
+
+        return new Response(
+          JSON.stringify({ message: 'Check-in reversed', ticketNumber }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
       // ═══════════════════════════════════════════════════════════
       // ADMIN API ENDPOINTS
       // ═══════════════════════════════════════════════════════════

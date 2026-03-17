@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
@@ -13,6 +13,15 @@ import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import Navbar from './layouts/Navbar'
 import Footer from './layouts/Footer'
+
+// Scroll to top on every route change
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname])
+  return null
+}
 
 function Layout({ children }) {
   const location = useLocation()
@@ -30,6 +39,7 @@ function App() {
   return (
     <div className='bg-white'>
       <Router>
+        <ScrollToTop />
         <Layout>
           <Routes>
             <Route path='/' element={<Home />} />
