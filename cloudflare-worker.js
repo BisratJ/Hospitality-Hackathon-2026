@@ -100,79 +100,73 @@ export default {
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
               <title>Hospitality Hackathon Registration</title>
             </head>
-            <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f5f5f5;">
-              <div style="max-width: 600px; margin: 0 auto; overflow: hidden;">
-                
-                <!-- Header — black with logo -->
-                <div style="background: #000000; padding: 32px 30px; text-align: center;">
-                  <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl-clean.png" alt="Hospitality Hackathon" style="height: 48px; margin-bottom: 12px; filter: invert(1);" />
-                  <p style="color: #999999; margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;">Hospitality Hackathon 2026</p>
+            <body style="margin: 0; padding: 0; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background-color: #f0f0f0;">
+              <div style="max-width: 520px; margin: 20px auto; overflow: hidden; border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);">
+
+                <!-- Header — logos + confirmation in one block -->
+                <div style="background: #0a0a0a; padding: 24px 28px 20px; text-align: center;">
+                  <div style="margin-bottom: 14px;">
+                    <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl-clean.png" alt="ALX" style="height: 30px; vertical-align: middle; filter: invert(1);" />
+                    <span style="color: #444; font-size: 18px; vertical-align: middle; margin: 0 10px;">×</span>
+                    <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/kuri-clean.png" alt="Hospitality Hackathon" style="height: 30px; vertical-align: middle; filter: invert(1);" />
+                  </div>
+                  <p style="color: #666; margin: 0 0 16px; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;">Hospitality Hackathon 2026</p>
+                  <h1 style="color: #fff; margin: 0 0 4px; font-size: 20px; font-weight: 700;">You're in, ${data.fullName}! 🎉</h1>
+                  <p style="color: #888; margin: 0; font-size: 13px;">Your registration has been confirmed</p>
                 </div>
 
-                <!-- Red accent banner -->
-                <div style="background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); padding: 24px 30px; text-align: center;">
-                  <h1 style="color: #ffffff; margin: 0 0 4px 0; font-size: 22px; font-weight: 700;">You're In, ${data.fullName}! 🎉</h1>
-                  <p style="color: #fecaca; margin: 0; font-size: 14px;">Your registration has been confirmed</p>
+                <!-- QR Code — hero element -->
+                <div style="background: #ffffff; padding: 32px 28px; text-align: center;">
+                  <div style="background: #fff; border: 2px solid #e5e5e5; border-radius: 16px; padding: 24px; display: inline-block;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=280x280&color=000000&margin=0" alt="QR Code" style="width: 280px; height: 280px; display: block;"/>
+                  </div>
+                  <p style="color: #999; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin: 14px 0 0;">Scan at check-in</p>
                 </div>
 
-                <!-- White content area -->
-                <div style="background: #ffffff; padding: 30px;">
-                  
-                  <!-- Ticket details -->
-                  <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+                <!-- Ticket Details — clean card -->
+                <div style="background: #fafafa; padding: 0 28px 28px;">
+                  <table style="width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; border: 1px solid #e8e8e8;">
                     <tr>
-                      <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket Number</span><br/>
-                        <span style="color: #000; font-size: 18px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${ticketNumber}</span>
+                      <td style="padding: 12px 16px; background: #fff; border-bottom: 1px solid #f0f0f0; width: 50%;">
+                        <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket</span><br/>
+                        <span style="color: #111; font-size: 14px; font-weight: 700; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">${ticketNumber}</span>
+                      </td>
+                      <td style="padding: 12px 16px; background: #fff; border-bottom: 1px solid #f0f0f0; border-left: 1px solid #f0f0f0; width: 50%;">
+                        <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
+                        <span style="color: #111; font-size: 14px; font-weight: 600;">${data.roleType}</span>
                       </td>
                     </tr>
                     <tr>
-                      <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
-                        <span style="color: #000; font-size: 15px; font-weight: 600;">${data.roleType}</span>
+                      <td style="padding: 12px 16px; background: #fff;${data.teamName ? ' border-bottom: 1px solid #f0f0f0;' : ''} width: 50%;">
+                        <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Type</span><br/>
+                        <span style="color: #111; font-size: 14px; font-weight: 600;">${data.registrationType === 'team' ? 'Team' : 'Individual'}</span>
                       </td>
-                    </tr>
-                    ${data.teamName ? `
+                      <td style="padding: 12px 16px; background: #fff;${data.teamName ? ' border-bottom: 1px solid #f0f0f0;' : ''} border-left: 1px solid #f0f0f0; width: 50%;">
+                        <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Name</span><br/>
+                        <span style="color: #111; font-size: 14px; font-weight: 600;">${data.fullName}</span>
+                      </td>
+                    </tr>${data.teamName ? `
                     <tr>
-                      <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
-                        <span style="color: #000; font-size: 15px; font-weight: 600;">${data.teamName}</span>
+                      <td colspan="2" style="padding: 12px 16px; background: #fff;">
+                        <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
+                        <span style="color: #111; font-size: 14px; font-weight: 600;">${data.teamName}</span>
                       </td>
-                    </tr>
-                    ` : ''}
-                    <tr>
-                      <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626;">
-                        <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Type</span><br/>
-                        <span style="color: #000; font-size: 15px; font-weight: 600;">${data.registrationType === 'team' ? 'Team' : 'Individual'}</span>
-                      </td>
-                    </tr>
+                    </tr>` : ''}
                   </table>
+                </div>
 
-                  <!-- QR Code -->
-                  <div style="text-align: center; margin-bottom: 24px;">
-                    <div style="background: #000; border-radius: 12px; padding: 20px; display: inline-block;">
-                      <p style="color: #999; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin: 0 0 12px 0;">Check-in QR Code</p>
-                      <div style="background: #fff; padding: 10px; border-radius: 8px; display: inline-block;">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=160x160&color=000000" alt="QR Code" style="width: 160px; height: 160px; display: block;"/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Next steps -->
-                  <div style="border-left: 3px solid #DC2626; padding-left: 16px; margin-bottom: 8px;">
-                    <h3 style="color: #000; font-size: 14px; font-weight: 700; margin: 0 0 6px 0;">What's Next?</h3>
-                    <p style="color: #666; font-size: 13px; margin: 0; line-height: 1.8;">
-                      ✅ Save your QR code for check-in<br/>
-                      ✅ Join our community channels<br/>
-                      ✅ Get ready to innovate!
-                    </p>
-                  </div>
+                <!-- What's next — minimal -->
+                <div style="background: #fff; padding: 20px 28px; border-top: 1px solid #f0f0f0;">
+                  <p style="color: #111; font-size: 13px; font-weight: 600; margin: 0 0 6px;">What's Next?</p>
+                  <p style="color: #777; font-size: 12px; margin: 0; line-height: 1.8;">
+                    Save your QR code · Join our community · Get ready to innovate
+                  </p>
                 </div>
 
                 <!-- Footer -->
-                <div style="background: #000; padding: 20px 30px; text-align: center;">
-                  <p style="color: #999; font-size: 12px; margin: 0 0 4px 0; font-weight: 600;">Hospitality Hackathon 2026 · Addis Ababa</p>
-                  <a href="https://hospitalityhackathon.et" style="color: #DC2626; font-size: 12px; text-decoration: none; font-weight: 600;">hospitalityhackathon.et</a>
+                <div style="background: #0a0a0a; padding: 16px 28px; text-align: center;">
+                  <p style="color: #666; font-size: 11px; margin: 0;">Hospitality Hackathon 2026 · Addis Ababa</p>
+                  <a href="https://hospitalityhackathon.et" style="color: #DC2626; font-size: 11px; text-decoration: none; font-weight: 600;">hospitalityhackathon.et</a>
                 </div>
 
               </div>
@@ -255,71 +249,67 @@ export default {
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Hospitality Hackathon Registration</title>
                   </head>
-                  <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f5f5f5;">
-                    <div style="max-width: 600px; margin: 0 auto; overflow: hidden;">
-                      
-                      <!-- Header — black with logo -->
-                      <div style="background: #000000; padding: 32px 30px; text-align: center;">
-                        <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl-clean.png" alt="Hospitality Hackathon" style="height: 48px; margin-bottom: 12px; filter: invert(1);" />
-                        <p style="color: #999999; margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;">Hospitality Hackathon 2026</p>
+                  <body style="margin: 0; padding: 0; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background-color: #f0f0f0;">
+                    <div style="max-width: 520px; margin: 20px auto; overflow: hidden; border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);">
+
+                      <!-- Header — logos + confirmation in one block -->
+                      <div style="background: #0a0a0a; padding: 24px 28px 20px; text-align: center;">
+                        <div style="margin-bottom: 14px;">
+                          <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl-clean.png" alt="ALX" style="height: 30px; vertical-align: middle; filter: invert(1);" />
+                          <span style="color: #444; font-size: 18px; vertical-align: middle; margin: 0 10px;">×</span>
+                          <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/kuri-clean.png" alt="Hospitality Hackathon" style="height: 30px; vertical-align: middle; filter: invert(1);" />
+                        </div>
+                        <p style="color: #666; margin: 0 0 16px; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;">Hospitality Hackathon 2026</p>
+                        <h1 style="color: #fff; margin: 0 0 4px; font-size: 20px; font-weight: 700;">Welcome aboard, ${member.fullName}! 🤝</h1>
+                        <p style="color: #888; margin: 0; font-size: 13px;">You've been registered as a team member</p>
                       </div>
 
-                      <!-- Red accent banner -->
-                      <div style="background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); padding: 24px 30px; text-align: center;">
-                        <h1 style="color: #ffffff; margin: 0 0 4px 0; font-size: 22px; font-weight: 700;">Welcome Aboard, ${member.fullName}! 🤝</h1>
-                        <p style="color: #fecaca; margin: 0; font-size: 14px;">You've been registered as a team member</p>
+                      <!-- QR Code — hero element -->
+                      <div style="background: #ffffff; padding: 32px 28px; text-align: center;">
+                        <div style="background: #fff; border: 2px solid #e5e5e5; border-radius: 16px; padding: 24px; display: inline-block;">
+                          <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(memberQrData)}&size=280x280&color=000000&margin=0" alt="QR Code" style="width: 280px; height: 280px; display: block;"/>
+                        </div>
+                        <p style="color: #999; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin: 14px 0 0;">Scan at check-in</p>
                       </div>
 
-                      <!-- White content area -->
-                      <div style="background: #ffffff; padding: 30px;">
-                        
-                        <!-- Ticket details -->
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+                      <!-- Ticket Details — clean card -->
+                      <div style="background: #fafafa; padding: 0 28px 28px;">
+                        <table style="width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; border: 1px solid #e8e8e8;">
                           <tr>
-                            <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
-                              <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
-                              <span style="color: #000; font-size: 15px; font-weight: 600;">${data.teamName}</span>
+                            <td style="padding: 12px 16px; background: #fff; border-bottom: 1px solid #f0f0f0; width: 50%;">
+                              <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket</span><br/>
+                              <span style="color: #111; font-size: 14px; font-weight: 700; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">${memberTicket}</span>
+                            </td>
+                            <td style="padding: 12px 16px; background: #fff; border-bottom: 1px solid #f0f0f0; border-left: 1px solid #f0f0f0; width: 50%;">
+                              <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
+                              <span style="color: #111; font-size: 14px; font-weight: 600;">${member.roleType}</span>
                             </td>
                           </tr>
                           <tr>
-                            <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626; border-bottom: 1px solid #f0f0f0;">
-                              <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket Number</span><br/>
-                              <span style="color: #000; font-size: 18px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${memberTicket}</span>
+                            <td style="padding: 12px 16px; background: #fff; border-bottom: 1px solid #f0f0f0; width: 50%;">
+                              <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
+                              <span style="color: #111; font-size: 14px; font-weight: 600;">${data.teamName}</span>
                             </td>
-                          </tr>
-                          <tr>
-                            <td style="padding: 14px 16px; background: #fafafa; border-left: 3px solid #DC2626;">
-                              <span style="color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
-                              <span style="color: #000; font-size: 15px; font-weight: 600;">${member.roleType}</span>
+                            <td style="padding: 12px 16px; background: #fff; border-bottom: 1px solid #f0f0f0; border-left: 1px solid #f0f0f0; width: 50%;">
+                              <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Name</span><br/>
+                              <span style="color: #111; font-size: 14px; font-weight: 600;">${member.fullName}</span>
                             </td>
                           </tr>
                         </table>
+                      </div>
 
-                        <!-- QR Code -->
-                        <div style="text-align: center; margin-bottom: 24px;">
-                          <div style="background: #000; border-radius: 12px; padding: 20px; display: inline-block;">
-                            <p style="color: #999; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin: 0 0 12px 0;">Check-in QR Code</p>
-                            <div style="background: #fff; padding: 10px; border-radius: 8px; display: inline-block;">
-                              <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(memberQrData)}&size=160x160&color=000000" alt="QR Code" style="width: 160px; height: 160px; display: block;"/>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Next steps -->
-                        <div style="border-left: 3px solid #DC2626; padding-left: 16px; margin-bottom: 8px;">
-                          <h3 style="color: #000; font-size: 14px; font-weight: 700; margin: 0 0 6px 0;">What's Next?</h3>
-                          <p style="color: #666; font-size: 13px; margin: 0; line-height: 1.8;">
-                            ✅ Save your QR code for check-in<br/>
-                            ✅ Coordinate with your team lead<br/>
-                            ✅ Get ready to innovate together!
-                          </p>
-                        </div>
+                      <!-- What's next — minimal -->
+                      <div style="background: #fff; padding: 20px 28px; border-top: 1px solid #f0f0f0;">
+                        <p style="color: #111; font-size: 13px; font-weight: 600; margin: 0 0 6px;">What's Next?</p>
+                        <p style="color: #777; font-size: 12px; margin: 0; line-height: 1.8;">
+                          Save your QR code · Coordinate with your team · Get ready to innovate
+                        </p>
                       </div>
 
                       <!-- Footer -->
-                      <div style="background: #000; padding: 20px 30px; text-align: center;">
-                        <p style="color: #999; font-size: 12px; margin: 0 0 4px 0; font-weight: 600;">Hospitality Hackathon 2026 · Addis Ababa</p>
-                        <a href="https://hospitalityhackathon.et" style="color: #DC2626; font-size: 12px; text-decoration: none; font-weight: 600;">hospitalityhackathon.et</a>
+                      <div style="background: #0a0a0a; padding: 16px 28px; text-align: center;">
+                        <p style="color: #666; font-size: 11px; margin: 0;">Hospitality Hackathon 2026 · Addis Ababa</p>
+                        <a href="https://hospitalityhackathon.et" style="color: #DC2626; font-size: 11px; text-decoration: none; font-weight: 600;">hospitalityhackathon.et</a>
                       </div>
 
                     </div>
@@ -664,7 +654,7 @@ export default {
           );
         }
 
-        // GET /api/admin/registrations
+        // GET /api/admin/registrations  (flat list — every participant is a row)
         if (path === '/api/admin/registrations' && request.method === 'GET') {
           const users = await env.DB.prepare(
             "SELECT * FROM users ORDER BY id DESC"
@@ -673,20 +663,29 @@ export default {
             "SELECT * FROM team_members ORDER BY userId, id"
           ).all();
 
-          // Group team members by userId
-          const membersByUser = {};
-          for (const m of (teamMembers?.results || [])) {
-            if (!membersByUser[m.userId]) membersByUser[m.userId] = [];
-            membersByUser[m.userId].push(m);
+          // Build lookup: userId → user row (for teamName etc.)
+          const userById = {};
+          for (const u of (users?.results || [])) {
+            userById[u.id] = u;
           }
 
-          const result = (users?.results || []).map(u => ({
-            ...u,
-            teamMembers: membersByUser[u.id] || [],
-          }));
+          // Flat list: leads first, then members
+          const flat = [];
+          for (const u of (users?.results || [])) {
+            flat.push({ ...u, participantType: 'lead' });
+          }
+          for (const m of (teamMembers?.results || [])) {
+            const parent = userById[m.userId] || {};
+            flat.push({
+              ...m,
+              participantType: 'member',
+              teamName: parent.teamName || '',
+              registrationType: 'team',
+            });
+          }
 
           return new Response(
-            JSON.stringify(result),
+            JSON.stringify(flat),
             { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }

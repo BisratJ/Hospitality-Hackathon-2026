@@ -17,9 +17,8 @@ export default function AdminDashboard() {
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("all");
-  const [checkingIn, setCheckingIn] = useState({}); // track per-row loading state
+  const [checkingIn, setCheckingIn] = useState({});
 
   const token = sessionStorage.getItem("admin_token");
   const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
@@ -58,9 +57,8 @@ export default function AdminDashboard() {
 
   const logout = () => { sessionStorage.removeItem("admin_token"); navigate("/admin"); };
 
-  // Manual check-in / undo for a single registration row
   const handleManualCheckIn = async (e, reg) => {
-    e.stopPropagation(); // prevent row expansion
+    e.stopPropagation();
     const ticketNumber = reg.ticketNumber;
     if (!ticketNumber) return;
 
@@ -69,28 +67,18 @@ export default function AdminDashboard() {
     try {
       let res;
       if (!reg.checkInStatus) {
-        // Check IN
-        res = await fetch(`${API_URL}/api/checkin/${ticketNumber}`, {
-          method: "POST",
-          headers,
-        });
+        res = await fetch(`${API_URL}/api/checkin/${ticketNumber}`, { method: "POST", headers });
       } else {
-        // Undo check-in
-        res = await fetch(`${API_URL}/api/admin/undo-checkin/${ticketNumber}`, {
-          method: "PUT",
-          headers,
-        });
+        res = await fetch(`${API_URL}/api/admin/undo-checkin/${ticketNumber}`, { method: "PUT", headers });
       }
 
       if (res.ok) {
-        // Optimistically update the row in local state
         setRegistrations(prev => prev.map(r => {
           if (r.ticketNumber === ticketNumber) {
             return { ...r, checkInStatus: !reg.checkInStatus };
           }
           return r;
         }));
-        // Refresh stats quietly
         fetchStats();
       }
     } catch (err) {
@@ -115,7 +103,7 @@ export default function AdminDashboard() {
     }
   };
 
-  // Filter registrations
+  // Filter registrations — now a flat list of all participants
   const filtered = registrations.filter((r) => {
     const q = search.toLowerCase();
     const matchesSearch = !q || [r.fullName, r.email, r.teamName, r.ticketNumber].some(f => (f || "").toLowerCase().includes(q));
@@ -136,6 +124,17 @@ export default function AdminDashboard() {
       </div>
     );
   }
+
+  // Derive type badge for each participant
+  const typeBadge = (r) => {
+    if (r.participantType === "member") {
+      return <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">Member</span>;
+    }
+    if (r.registrationType === "team") {
+      return <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">Team Lead</span>;
+    }
+    return <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">Individual</span>;
+  };
 
   return (
     <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #171717 35%, #1a1a1a 70%, #111111 100%)" }}>
@@ -177,13 +176,13 @@ export default function AdminDashboard() {
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
           <div className="flex gap-2 overflow-x-auto pb-1 w-full sm:w-auto">
             {[
-              { key: "all", label: "All" },
+              { key: "all", label: `All (${registrations.length})` },
               { key: "teams", label: "Teams" },
               { key: "individuals", label: "Individuals" },
               { key: "checkedin", label: "Checked In" },
             ].map((t) => (
               <button key={t.key} onClick={() => setActiveTab(t.key)} className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition min-h-[36px] ${activeTab === t.key ? "bg-red-600 text-white" : "text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10"}`}>
-                {t.label} {t.key === "all" ? `(${registrations.length})` : ""}
+                {t.label}
               </button>
             ))}
           </div>
@@ -227,82 +226,50 @@ export default function AdminDashboard() {
                 {filtered.length === 0 ? (
                   <tr><td colSpan="8" className="p-8 text-center text-neutral-500">No registrations found</td></tr>
                 ) : filtered.map((r, i) => (
-                  <>
-                    <tr key={r.id || i} className="border-b border-white/5 hover:bg-white/[0.02] cursor-pointer transition" onClick={() => setExpandedRow(expandedRow === r.id ? null : r.id)}>
-                      <td className="p-3">
-                        <div className="font-medium text-white">{r.fullName}</div>
-                        <div className="text-xs text-neutral-500 md:hidden">{r.email}</div>
-                      </td>
-                      <td className="p-3 text-neutral-400 hidden md:table-cell">{r.email}</td>
-                      <td className="p-3 text-neutral-400 hidden lg:table-cell">{r.phoneNumber}</td>
-                      <td className="p-3">
-                        <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${r.registrationType === "team" ? "bg-red-500/10 text-red-400 border border-red-500/20" : "bg-blue-500/10 text-blue-400 border border-blue-500/20"}`}>
-                          {r.registrationType === "team" ? "Team" : "Individual"}
+                  <tr key={r.ticketNumber || i} className="border-b border-white/5 hover:bg-white/[0.02] transition">
+                    <td className="p-3">
+                      <div className="font-medium text-white">{r.fullName}</div>
+                      <div className="text-xs text-neutral-500 md:hidden">{r.email}</div>
+                    </td>
+                    <td className="p-3 text-neutral-400 hidden md:table-cell">{r.email}</td>
+                    <td className="p-3 text-neutral-400 hidden lg:table-cell">{r.phoneNumber}</td>
+                    <td className="p-3">{typeBadge(r)}</td>
+                    <td className="p-3 text-neutral-400 hidden md:table-cell">{r.teamName || "—"}</td>
+                    <td className="p-3 font-mono text-xs text-neutral-500 hidden lg:table-cell">{r.ticketNumber}</td>
+                    <td className="p-3">
+                      {r.checkInStatus ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> In
                         </span>
-                      </td>
-                      <td className="p-3 text-neutral-400 hidden md:table-cell">{r.teamName || "—"}</td>
-                      <td className="p-3 font-mono text-xs text-neutral-500 hidden lg:table-cell">{r.ticketNumber}</td>
-                      <td className="p-3">
-                        {r.checkInStatus ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> In
-                          </span>
-                        ) : (
-                          <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-white/5 text-neutral-500 border border-white/10">—</span>
-                        )}
-                      </td>
-                      <td className="p-3" onClick={(e) => e.stopPropagation()}>
-                        {checkingIn[r.ticketNumber] ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs text-neutral-400">
-                            <svg className="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                          </span>
-                        ) : r.checkInStatus ? (
-                          <button
-                            onClick={(e) => handleManualCheckIn(e, r)}
-                            className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-red-300 bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/20 transition"
-                            title="Undo check-in"
-                          >
-                            Undo
-                          </button>
-                        ) : (
-                          <button
-                            onClick={(e) => handleManualCheckIn(e, r)}
-                            className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 transition"
-                            title="Check in this participant"
-                          >
-                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
-                            Check In
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                    {/* Expanded team members row */}
-                    {expandedRow === r.id && r.teamMembers && r.teamMembers.length > 0 && (
-                      <tr key={`exp-${r.id}`} className="bg-white/[0.02]">
-                        <td colSpan="8" className="p-0">
-                          <div className="px-6 py-3 border-l-2 border-red-500/40 ml-4">
-                            <div className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">Team Members ({r.teamMembers.length})</div>
-                            <div className="space-y-1.5">
-                              {r.teamMembers.map((m, mi) => (
-                                <div key={mi} className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-                                  <span className="text-white font-medium min-w-[140px]">{m.fullName}</span>
-                                  <span className="text-neutral-500">{m.email}</span>
-                                  <span className="text-neutral-600 text-xs">{m.phoneNumber}</span>
-                                  <span className="text-neutral-600 text-xs">{m.roleType}</span>
-                                  <span className="font-mono text-xs text-neutral-600">{m.ticketNumber}</span>
-                                  {m.checkInStatus ? (
-                                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400">✓ In</span>
-                                  ) : (
-                                    <span className="text-[10px] text-neutral-600">—</span>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </>
+                      ) : (
+                        <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-white/5 text-neutral-500 border border-white/10">—</span>
+                      )}
+                    </td>
+                    <td className="p-3">
+                      {checkingIn[r.ticketNumber] ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 text-xs text-neutral-400">
+                          <svg className="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                        </span>
+                      ) : r.checkInStatus ? (
+                        <button
+                          onClick={(e) => handleManualCheckIn(e, r)}
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-red-300 bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/20 transition"
+                          title="Undo check-in"
+                        >
+                          Undo
+                        </button>
+                      ) : (
+                        <button
+                          onClick={(e) => handleManualCheckIn(e, r)}
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 transition"
+                          title="Check in this participant"
+                        >
+                          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
+                          Check In
+                        </button>
+                      )}
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -311,7 +278,7 @@ export default function AdminDashboard() {
 
         {/* Footer */}
         <div className="text-center text-xs text-neutral-600 pt-2 pb-4">
-          Showing {filtered.length} of {registrations.length} registrations
+          Showing {filtered.length} of {registrations.length} participants
         </div>
       </div>
     </div>
