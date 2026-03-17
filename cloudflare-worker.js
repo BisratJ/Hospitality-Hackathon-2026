@@ -551,7 +551,7 @@ export default {
       }
 
       // ─── Admin: Undo check-in ───────────────────────────────────
-      if (method === 'PUT' && path.startsWith('/api/admin/undo-checkin/')) {
+      if (request.method === 'PUT' && path.startsWith('/api/admin/undo-checkin/')) {
         const authHeader = request.headers.get('Authorization') || '';
         if (!authHeader.startsWith('Bearer ')) {
           return new Response(JSON.stringify({ error: 'Unauthorized' }), {
