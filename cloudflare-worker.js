@@ -100,60 +100,57 @@ export default {
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
               <title>Hospitality Hackathon Registration</title>
             </head>
-            <body style="margin: 0; padding: 0; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background-color: #ffffff;">
-              <div style="max-width: 520px; margin: 0 auto; padding: 32px 20px;">
+            <body style="margin: 0; padding: 0; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background-color: #f5f5f5;">
+              <div style="max-width: 520px; margin: 0 auto; overflow: hidden;">
 
-                <!-- Logos side-by-side -->
-                <div style="text-align: center; margin-bottom: 24px;">
-                  <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/hosphack.png" alt="Hospitality Hackathon" style="height: 48px; vertical-align: middle;" />
-                  <span style="color: #ccc; font-size: 20px; vertical-align: middle; margin: 0 14px;">×</span>
-                  <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl-clean.png" alt="ALX" style="height: 36px; vertical-align: middle;" />
-                </div>
-
-                <!-- Welcome text -->
-                <div style="text-align: center; margin-bottom: 28px;">
-                  <h1 style="color: #111; margin: 0 0 6px; font-size: 22px; font-weight: 700;">You're in, ${data.fullName}! 🎉</h1>
+                <!-- Header — dark with ALX logo centered -->
+                <div style="background: #0a0a0a; padding: 28px 28px 24px; text-align: center;">
+                  <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl.jpg" alt="ALX" style="height: 44px; margin-bottom: 16px;" />
+                  <p style="color: #666; margin: 0 0 18px; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;">Hospitality Hackathon 2026</p>
+                  <h1 style="color: #fff; margin: 0 0 6px; font-size: 22px; font-weight: 700;">You're in, ${data.fullName}! 🎉</h1>
                   <p style="color: #888; margin: 0; font-size: 14px;">Your registration has been confirmed</p>
                 </div>
 
-                <!-- Glassmorphism Ticket Card -->
-                <div style="background: linear-gradient(135deg, rgba(240,240,255,0.8) 0%, rgba(250,245,255,0.6) 100%); border: 1px solid rgba(200,200,220,0.4); border-radius: 16px; padding: 0; overflow: hidden; margin-bottom: 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.06);">
-                  <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
-                    <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket Number</span><br/>
-                    <span style="color: #111; font-size: 16px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${ticketNumber}</span>
+                <!-- QR Code — large & prominent -->
+                <div style="background: #ffffff; padding: 36px 28px; text-align: center;">
+                  <div style="border: 2px solid #e5e5e5; border-radius: 16px; padding: 20px; display: inline-block;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=360x360&color=000000&margin=0" alt="QR Code" style="width: 360px; height: 360px; display: block;"/>
                   </div>
-                  <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
-                    <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
-                    <span style="color: #111; font-size: 14px; font-weight: 600;">${data.roleType}</span>
-                  </div>${data.teamName ? `
-                  <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
-                    <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
-                    <span style="color: #111; font-size: 14px; font-weight: 600;">${data.teamName}</span>
-                  </div>` : ''}
-                  <div style="padding: 14px 20px;">
-                    <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Type</span><br/>
-                    <span style="color: #111; font-size: 14px; font-weight: 600;">${data.registrationType === 'team' ? 'Team' : 'Individual'}</span>
-                  </div>
+                  <p style="color: #aaa; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin: 14px 0 0;">Scan at check-in</p>
                 </div>
 
-                <!-- QR Code — large & prominent -->
-                <div style="text-align: center; margin-bottom: 28px;">
-                  <div style="border: 2px solid #eee; border-radius: 16px; padding: 20px; display: inline-block;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=320x320&color=000000&margin=0" alt="QR Code" style="width: 320px; height: 320px; display: block;"/>
+                <!-- Glassmorphism Ticket Card -->
+                <div style="padding: 0 28px 24px; background: #fff;">
+                  <div style="background: linear-gradient(135deg, rgba(240,240,255,0.8) 0%, rgba(250,245,255,0.6) 100%); border: 1px solid rgba(200,200,220,0.4); border-radius: 16px; padding: 0; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06);">
+                    <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
+                      <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket Number</span><br/>
+                      <span style="color: #111; font-size: 16px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${ticketNumber}</span>
+                    </div>
+                    <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
+                      <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
+                      <span style="color: #111; font-size: 14px; font-weight: 600;">${data.roleType}</span>
+                    </div>${data.teamName ? `
+                    <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
+                      <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
+                      <span style="color: #111; font-size: 14px; font-weight: 600;">${data.teamName}</span>
+                    </div>` : ''}
+                    <div style="padding: 14px 20px;">
+                      <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Type</span><br/>
+                      <span style="color: #111; font-size: 14px; font-weight: 600;">${data.registrationType === 'team' ? 'Team' : 'Individual'}</span>
+                    </div>
                   </div>
-                  <p style="color: #aaa; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin: 12px 0 0;">Scan at check-in</p>
                 </div>
 
                 <!-- What's next -->
-                <div style="text-align: center; margin-bottom: 20px;">
-                  <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.8;">
+                <div style="background: #fff; padding: 16px 28px; text-align: center;">
+                  <p style="color: #999; font-size: 12px; margin: 0;">
                     Save your QR code · Join our community · Get ready to innovate
                   </p>
                 </div>
 
                 <!-- Minimal footer -->
-                <div style="text-align: center; padding-top: 16px; border-top: 1px solid #f0f0f0;">
-                  <p style="color: #bbb; font-size: 10px; margin: 0;">Hospitality Hackathon 2026 · Addis Ababa · <a href="https://hospitalityhackathon.et" style="color: #999; text-decoration: none;">hospitalityhackathon.et</a></p>
+                <div style="background: #0a0a0a; padding: 14px 28px; text-align: center;">
+                  <p style="color: #555; font-size: 10px; margin: 0;">Hospitality Hackathon 2026 · Addis Ababa · <a href="https://hospitalityhackathon.et" style="color: #777; text-decoration: none;">hospitalityhackathon.et</a></p>
                 </div>
 
               </div>
@@ -236,56 +233,53 @@ export default {
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Hospitality Hackathon Registration</title>
                   </head>
-                  <body style="margin: 0; padding: 0; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background-color: #ffffff;">
-                    <div style="max-width: 520px; margin: 0 auto; padding: 32px 20px;">
+                  <body style="margin: 0; padding: 0; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background-color: #f5f5f5;">
+                    <div style="max-width: 520px; margin: 0 auto; overflow: hidden;">
 
-                      <!-- Logos side-by-side -->
-                      <div style="text-align: center; margin-bottom: 24px;">
-                        <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/hosphack.png" alt="Hospitality Hackathon" style="height: 48px; vertical-align: middle;" />
-                        <span style="color: #ccc; font-size: 20px; vertical-align: middle; margin: 0 14px;">×</span>
-                        <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl-clean.png" alt="ALX" style="height: 36px; vertical-align: middle;" />
-                      </div>
-
-                      <!-- Welcome text -->
-                      <div style="text-align: center; margin-bottom: 28px;">
-                        <h1 style="color: #111; margin: 0 0 6px; font-size: 22px; font-weight: 700;">Welcome aboard, ${member.fullName}! 🤝</h1>
+                      <!-- Header — dark with ALX logo centered -->
+                      <div style="background: #0a0a0a; padding: 28px 28px 24px; text-align: center;">
+                        <img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl.jpg" alt="ALX" style="height: 44px; margin-bottom: 16px;" />
+                        <p style="color: #666; margin: 0 0 18px; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;">Hospitality Hackathon 2026</p>
+                        <h1 style="color: #fff; margin: 0 0 6px; font-size: 22px; font-weight: 700;">Welcome aboard, ${member.fullName}! 🤝</h1>
                         <p style="color: #888; margin: 0; font-size: 14px;">You've been registered as a team member</p>
                       </div>
 
-                      <!-- Glassmorphism Ticket Card -->
-                      <div style="background: linear-gradient(135deg, rgba(240,240,255,0.8) 0%, rgba(250,245,255,0.6) 100%); border: 1px solid rgba(200,200,220,0.4); border-radius: 16px; padding: 0; overflow: hidden; margin-bottom: 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.06);">
-                        <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
-                          <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket Number</span><br/>
-                          <span style="color: #111; font-size: 16px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${memberTicket}</span>
+                      <!-- QR Code — large & prominent -->
+                      <div style="background: #ffffff; padding: 36px 28px; text-align: center;">
+                        <div style="border: 2px solid #e5e5e5; border-radius: 16px; padding: 20px; display: inline-block;">
+                          <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(memberQrData)}&size=360x360&color=000000&margin=0" alt="QR Code" style="width: 360px; height: 360px; display: block;"/>
                         </div>
-                        <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
-                          <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
-                          <span style="color: #111; font-size: 14px; font-weight: 600;">${member.roleType}</span>
-                        </div>
-                        <div style="padding: 14px 20px;">
-                          <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
-                          <span style="color: #111; font-size: 14px; font-weight: 600;">${data.teamName}</span>
-                        </div>
+                        <p style="color: #aaa; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin: 14px 0 0;">Scan at check-in</p>
                       </div>
 
-                      <!-- QR Code — large & prominent -->
-                      <div style="text-align: center; margin-bottom: 28px;">
-                        <div style="border: 2px solid #eee; border-radius: 16px; padding: 20px; display: inline-block;">
-                          <img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(memberQrData)}&size=320x320&color=000000&margin=0" alt="QR Code" style="width: 320px; height: 320px; display: block;"/>
+                      <!-- Glassmorphism Ticket Card -->
+                      <div style="padding: 0 28px 24px; background: #fff;">
+                        <div style="background: linear-gradient(135deg, rgba(240,240,255,0.8) 0%, rgba(250,245,255,0.6) 100%); border: 1px solid rgba(200,200,220,0.4); border-radius: 16px; padding: 0; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06);">
+                          <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
+                            <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Ticket Number</span><br/>
+                            <span style="color: #111; font-size: 16px; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: 1px;">${memberTicket}</span>
+                          </div>
+                          <div style="padding: 14px 20px; border-bottom: 1px solid rgba(200,200,220,0.3);">
+                            <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Role</span><br/>
+                            <span style="color: #111; font-size: 14px; font-weight: 600;">${member.roleType}</span>
+                          </div>
+                          <div style="padding: 14px 20px;">
+                            <span style="color: #999; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Team</span><br/>
+                            <span style="color: #111; font-size: 14px; font-weight: 600;">${data.teamName}</span>
+                          </div>
                         </div>
-                        <p style="color: #aaa; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin: 12px 0 0;">Scan at check-in</p>
                       </div>
 
                       <!-- What's next -->
-                      <div style="text-align: center; margin-bottom: 20px;">
-                        <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.8;">
+                      <div style="background: #fff; padding: 16px 28px; text-align: center;">
+                        <p style="color: #999; font-size: 12px; margin: 0;">
                           Save your QR code · Coordinate with your team · Get ready to innovate
                         </p>
                       </div>
 
                       <!-- Minimal footer -->
-                      <div style="text-align: center; padding-top: 16px; border-top: 1px solid #f0f0f0;">
-                        <p style="color: #bbb; font-size: 10px; margin: 0;">Hospitality Hackathon 2026 · Addis Ababa · <a href="https://hospitalityhackathon.et" style="color: #999; text-decoration: none;">hospitalityhackathon.et</a></p>
+                      <div style="background: #0a0a0a; padding: 14px 28px; text-align: center;">
+                        <p style="color: #555; font-size: 10px; margin: 0;">Hospitality Hackathon 2026 · Addis Ababa · <a href="https://hospitalityhackathon.et" style="color: #777; text-decoration: none;">hospitalityhackathon.et</a></p>
                       </div>
 
                     </div>
@@ -413,7 +407,9 @@ export default {
 
       if (path.startsWith('/api/registration/')) {
         const ticketNumber = path.split('/').pop();
-        const user = await env.DB.prepare(`
+
+        // First try looking up in users table (team leads / individuals)
+        let user = await env.DB.prepare(`
           SELECT u.*, GROUP_CONCAT(
             json_object(
               'fullName', tm.fullName,
@@ -429,32 +425,40 @@ export default {
           GROUP BY u.id
         `).bind(ticketNumber).first();
 
-        if (!user) {
-          return new Response(
-            JSON.stringify({ error: 'Registration not found' }),
-            {
-              status: 404,
-              headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-            }
-          );
-        }
-
-        // Parse team members if present
-        if (user.teamMembers) {
-          try {
-            user.teamMembers = JSON.parse(`[${user.teamMembers}]`);
-          } catch (e) {
+        if (user) {
+          // Parse team members if present
+          if (user.teamMembers) {
+            try { user.teamMembers = JSON.parse(`[${user.teamMembers}]`); }
+            catch { user.teamMembers = []; }
+          } else {
             user.teamMembers = [];
           }
-        } else {
-          user.teamMembers = [];
+          return new Response(JSON.stringify(user), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+
+        // Fallback: look up in team_members table
+        const member = await env.DB.prepare(`
+          SELECT tm.*, u.teamName, u.registrationType
+          FROM team_members tm
+          LEFT JOIN users u ON tm.userId = u.id
+          WHERE tm.ticketNumber = ?
+        `).bind(ticketNumber).first();
+
+        if (member) {
+          return new Response(JSON.stringify({
+            ...member,
+            participantType: 'member',
+            teamMembers: [],
+          }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
         }
 
         return new Response(
-          JSON.stringify(user),
-          {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          }
+          JSON.stringify({ error: 'Registration not found' }),
+          { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
