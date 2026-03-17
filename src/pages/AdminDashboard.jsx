@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL || "https://alx-hackathon-api.bisrojc60.workers.dev";
@@ -21,6 +21,9 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("all");
   const [checkingIn, setCheckingIn] = useState({});
   const [activeSection, setActiveSection] = useState("registrations"); // "registrations" | "contacts"
+  const [isLive, setIsLive] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const pollRef = useRef(null);
 
   const token = sessionStorage.getItem("admin_token");
   const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
@@ -58,6 +61,51 @@ export default function AdminDashboard() {
   }, [token]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
+
+  // Silent poll — refreshes data without showing loading spinner
+  const silentFetch = useCallback(async () => {
+    if (!token) return;
+    try {
+      const [statsRes, regRes] = await Promise.all([
+        fetch(`${API_URL}/api/admin/stats`, { headers }),
+        fetch(`${API_URL}/api/admin/registrations`, { headers }),
+      ]);
+      if (statsRes.ok) setStats(await statsRes.json());
+      if (regRes.ok) setRegistrations(await regRes.json());
+      setLastUpdated(new Date());
+      setIsLive(true);
+    } catch {
+      setIsLive(false);
+    }
+  }, [token]);
+
+  // Auto-polling every 5 seconds, pauses when tab is hidden
+  useEffect(() => {
+    if (!token || loading) return;
+
+    const startPolling = () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+      pollRef.current = setInterval(silentFetch, 5000);
+      setIsLive(true);
+    };
+    const stopPolling = () => {
+      if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+      setIsLive(false);
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) { stopPolling(); }
+      else { silentFetch(); startPolling(); }
+    };
+
+    startPolling();
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      stopPolling();
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [token, loading, silentFetch]);
 
   const logout = () => { sessionStorage.removeItem("admin_token"); navigate("/admin"); };
 
@@ -157,6 +205,16 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Live indicator */}
+            {isLive && (
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20" title={lastUpdated ? `Last updated: ${lastUpdated.toLocaleTimeString()}` : 'Live'}>
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-wider">Live</span>
+              </div>
+            )}
             <button onClick={fetchData} className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 transition min-h-[40px] min-w-[40px] flex items-center justify-center" title="Refresh">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
             </button>
