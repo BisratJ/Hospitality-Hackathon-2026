@@ -190,6 +190,22 @@ export default function AdminDashboard() {
     );
   };
 
+  const timeAgo = (dateStr) => {
+    if (!dateStr) return "—";
+    const now = new Date();
+    const then = new Date(dateStr);
+    const diffMs = now - then;
+    if (diffMs < 0) return "just now";
+    const seconds = Math.floor(diffMs / 1000);
+    if (seconds < 60) return "just now";
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes} min ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours} hr${hours > 1 ? "s" : ""} ago`;
+    const days = Math.floor(hours / 24);
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  };
+
   return (
     <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #171717 35%, #1a1a1a 70%, #111111 100%)" }}>
       {/* Header */}
@@ -283,7 +299,7 @@ export default function AdminDashboard() {
                       <th className="text-left px-4 py-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider">Type</th>
                       <th className="text-left px-4 py-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">ALX Affiliation</th>
                       <th className="text-left p-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">Team</th>
-                      <th className="text-left p-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Ticket</th>
+                      <th className="text-left p-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Registered</th>
                       <th className="text-left px-4 py-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider">Status</th>
                       <th className="text-left px-4 py-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider">Action</th>
                     </tr>
@@ -308,7 +324,7 @@ export default function AdminDashboard() {
                           )}
                         </td>
                         <td className="p-3 align-middle text-neutral-400 hidden md:table-cell">{r.teamName || "—"}</td>
-                        <td className="p-3 align-middle font-mono text-xs text-neutral-500 hidden lg:table-cell">{r.ticketNumber}</td>
+                        <td className="p-3 align-middle text-xs text-neutral-500 hidden lg:table-cell whitespace-nowrap">{timeAgo(r.created_at || r.registeredAt)}</td>
                         <td className="px-4 py-3 align-middle">{statusBadge(r)}</td>
                         <td className="px-4 py-3 align-middle">
                           {checkingIn[r.ticketNumber] ? (
