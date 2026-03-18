@@ -190,20 +190,27 @@ export default function AdminDashboard() {
     );
   };
 
-  const timeAgo = (dateStr) => {
-    if (!dateStr) return "—";
-    const now = new Date();
-    const then = new Date(dateStr);
-    const diffMs = now - then;
-    if (diffMs < 0) return "just now";
-    const seconds = Math.floor(diffMs / 1000);
-    if (seconds < 60) return "just now";
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `${minutes} min ago`;
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours} hr${hours > 1 ? "s" : ""} ago`;
-    const days = Math.floor(hours / 24);
-    return `${days} day${days > 1 ? "s" : ""} ago`;
+  // Derive registration time from ticket number (ALX-{base36 of Date.now()})
+  const timeAgo = (ticketNumber) => {
+    if (!ticketNumber) return "—";
+    try {
+      const code = ticketNumber.replace("ALX-", "").toLowerCase();
+      const ms = parseInt(code, 36);
+      if (isNaN(ms) || ms <= 0) return "—";
+      const now = Date.now();
+      const diffMs = now - ms;
+      if (diffMs < 0) return "just now";
+      const seconds = Math.floor(diffMs / 1000);
+      if (seconds < 60) return "just now";
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return `${minutes} min ago`;
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return `${hours} hr${hours > 1 ? "s" : ""} ago`;
+      const days = Math.floor(hours / 24);
+      return `${days} day${days > 1 ? "s" : ""} ago`;
+    } catch {
+      return "—";
+    }
   };
 
   return (
@@ -324,7 +331,7 @@ export default function AdminDashboard() {
                           )}
                         </td>
                         <td className="p-3 align-middle text-neutral-400 hidden md:table-cell">{r.teamName || "—"}</td>
-                        <td className="p-3 align-middle text-xs text-neutral-500 hidden lg:table-cell whitespace-nowrap">{timeAgo(r.created_at || r.registeredAt)}</td>
+                        <td className="p-3 align-middle text-xs text-neutral-500 hidden lg:table-cell whitespace-nowrap">{timeAgo(r.ticketNumber)}</td>
                         <td className="px-4 py-3 align-middle">{statusBadge(r)}</td>
                         <td className="px-4 py-3 align-middle">
                           {checkingIn[r.ticketNumber] ? (
