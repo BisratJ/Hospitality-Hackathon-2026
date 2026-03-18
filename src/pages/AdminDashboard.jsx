@@ -170,22 +170,22 @@ export default function AdminDashboard() {
   }
 
   const typeBadge = (r) => {
-    if (r.participantType === "member") return <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">Member</span>;
-    if (r.registrationType === "team") return <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">Team Lead</span>;
-    return <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">Individual</span>;
+    if (r.participantType === "member") return <span className="inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-amber-500/10 text-amber-400 border border-amber-500/20">Member</span>;
+    if (r.registrationType === "team") return <span className="inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-red-500/10 text-red-400 border border-red-500/20">Team Lead</span>;
+    return <span className="inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-500/10 text-blue-400 border border-blue-500/20">Individual</span>;
   };
 
   const statusBadge = (r) => {
     if (r.checkInStatus) {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Checked In
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" /> Checked In
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-neutral-500/10 text-neutral-500 border border-neutral-500/20">
-        <span className="w-1.5 h-1.5 rounded-full bg-neutral-500" /> Not Checked In
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-neutral-500/10 text-neutral-500 border border-neutral-500/20">
+        <span className="w-1.5 h-1.5 rounded-full bg-neutral-500 flex-shrink-0" /> Not Checked In
       </span>
     );
   };
@@ -277,15 +277,15 @@ export default function AdminDashboard() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Name</th>
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">Email</th>
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Phone</th>
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Type</th>
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">ALX Affiliation</th>
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">Team</th>
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Ticket</th>
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Status</th>
-                      <th className="text-left p-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">Action</th>
+                      <th className="text-left p-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider">Name</th>
+                      <th className="text-left p-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">Email</th>
+                      <th className="text-left p-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Phone</th>
+                      <th className="text-left px-4 py-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider">Type</th>
+                      <th className="text-left px-4 py-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">ALX Affiliation</th>
+                      <th className="text-left p-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden md:table-cell">Team</th>
+                      <th className="text-left p-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Ticket</th>
+                      <th className="text-left px-4 py-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider">Status</th>
+                      <th className="text-left px-4 py-3 align-middle text-xs font-semibold text-neutral-500 uppercase tracking-wider">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -293,33 +293,33 @@ export default function AdminDashboard() {
                       <tr><td colSpan="9" className="p-8 text-center text-neutral-500">No registrations found</td></tr>
                     ) : filtered.map((r, i) => (
                       <tr key={r.ticketNumber || i} className="border-b border-white/5 hover:bg-white/[0.02] transition">
-                        <td className="p-3">
+                        <td className="p-3 align-middle">
                           <div className="font-medium text-white">{r.fullName}</div>
                           <div className="text-xs text-neutral-500 md:hidden">{r.email}</div>
                         </td>
-                        <td className="p-3 text-neutral-400 hidden md:table-cell">{r.email}</td>
-                        <td className="p-3 text-neutral-400 hidden lg:table-cell">{r.phoneNumber}</td>
-                        <td className="p-3">{typeBadge(r)}</td>
-                        <td className="p-3 text-neutral-400 hidden md:table-cell">
+                        <td className="p-3 align-middle text-neutral-400 hidden md:table-cell">{r.email}</td>
+                        <td className="p-3 align-middle text-neutral-400 hidden lg:table-cell">{r.phoneNumber}</td>
+                        <td className="px-4 py-3 align-middle">{typeBadge(r)}</td>
+                        <td className="px-4 py-3 align-middle text-neutral-400 hidden md:table-cell">
                           {r.alxAffiliation ? (
-                            <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">{r.alxAffiliation}</span>
+                            <span className="inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-purple-500/10 text-purple-400 border border-purple-500/20">{r.alxAffiliation}</span>
                           ) : (
                             <span className="text-neutral-600">—</span>
                           )}
                         </td>
-                        <td className="p-3 text-neutral-400 hidden md:table-cell">{r.teamName || "—"}</td>
-                        <td className="p-3 font-mono text-xs text-neutral-500 hidden lg:table-cell">{r.ticketNumber}</td>
-                        <td className="p-3">{statusBadge(r)}</td>
-                        <td className="p-3">
+                        <td className="p-3 align-middle text-neutral-400 hidden md:table-cell">{r.teamName || "—"}</td>
+                        <td className="p-3 align-middle font-mono text-xs text-neutral-500 hidden lg:table-cell">{r.ticketNumber}</td>
+                        <td className="px-4 py-3 align-middle">{statusBadge(r)}</td>
+                        <td className="px-4 py-3 align-middle">
                           {checkingIn[r.ticketNumber] ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-1 text-xs text-neutral-400">
-                              <svg className="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                            <span className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs text-neutral-400">
+                              <svg className="animate-spin h-3.5 w-3.5" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
                             </span>
                           ) : r.checkInStatus ? (
-                            <button onClick={(e) => handleManualCheckIn(e, r)} className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-red-300 bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/20 transition" title="Undo check-in">Undo</button>
+                            <button onClick={(e) => handleManualCheckIn(e, r)} className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-neutral-400 hover:text-red-300 bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/20 transition" title="Undo check-in">Undo</button>
                           ) : (
-                            <button onClick={(e) => handleManualCheckIn(e, r)} className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 transition" title="Check in">
-                              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
+                            <button onClick={(e) => handleManualCheckIn(e, r)} className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 transition" title="Check in">
+                              <svg className="h-3.5 w-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
                               Check In
                             </button>
                           )}

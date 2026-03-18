@@ -113,6 +113,15 @@ const Registration = () => {
       ...prevState,
       teamMembers: updatedTeamMembers,
     }));
+
+    // Auto-switch to Individual if no team members remain (only lead)
+    if (updatedTeamMembers.length <= 1) {
+      setRegistrationType("individual");
+      setStatus({
+        type: "info",
+        message: "Switched to Individual registration — teams must have more than one participant.",
+      });
+    }
   };
 
   const validateForm = () => {
@@ -153,6 +162,12 @@ const Registration = () => {
     }
 
     if (registrationType === "team") {
+      // Ensure team has more than one participant
+      if (formData.teamMembers.length <= 1) {
+        newErrors.teamMembers = "Teams must have more than one participant. Please add team members or register as an Individual.";
+        isValid = false;
+      }
+
       if (!formData.teamName.trim()) {
         newErrors.teamName = "Team name is required";
         isValid = false;
@@ -489,14 +504,26 @@ const Registration = () => {
           </div>
         </div>
 
+        {/* Team validation warning */}
+        {registrationType === "team" && formData.teamMembers.length <= 1 && (
+          <div className="mb-6 p-4 rounded-xl border flex items-center gap-3 bg-amber-900/20 text-amber-300 border-amber-500/30">
+            <svg className="flex-shrink-0 h-5 w-5 text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 6a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 6zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+            </svg>
+            <span className="flex-1 text-sm">Teams must have more than one participant. Please add team members below, or switch to Individual registration.</span>
+          </div>
+        )}
+
         {status.message && (
           <div
             className={`mb-6 p-4 rounded-xl border flex items-center gap-3 ${
               status.type === "error"
                 ? "bg-red-900/30 text-red-300 border-red-500/30"
-                : status.type === "loading"
-                  ? "bg-white/5 text-neutral-300 border-white/10"
-                  : "bg-white/5 text-neutral-300 border-white/10"
+                : status.type === "info"
+                  ? "bg-blue-900/20 text-blue-300 border-blue-500/30"
+                  : status.type === "loading"
+                    ? "bg-white/5 text-neutral-300 border-white/10"
+                    : "bg-white/5 text-neutral-300 border-white/10"
             }`}
           >
             {status.type === "loading" && (
