@@ -162,11 +162,6 @@ const Registration = () => {
     }
 
     if (registrationType === "team") {
-      // Ensure team has more than one participant
-      if (formData.teamMembers.length <= 1) {
-        newErrors.teamMembers = "Teams must have more than one participant. Please add team members or register as an Individual.";
-        isValid = false;
-      }
 
       if (!formData.teamName.trim()) {
         newErrors.teamName = "Team name is required";
@@ -259,6 +254,16 @@ const Registration = () => {
     // Reset previous errors
     setFieldErrors({});
     setStatus({ type: "", message: "" });
+
+    // Team-size check: auto-switch to Individual instead of showing a generic error
+    if (registrationType === "team" && formData.teamMembers.length <= 1) {
+      setRegistrationType("individual");
+      setStatus({
+        type: "info",
+        message: "Switched to Individual registration \u2014 teams must have more than one participant.",
+      });
+      return;
+    }
 
     if (!validateForm()) {
       setStatus({
@@ -504,13 +509,13 @@ const Registration = () => {
           </div>
         </div>
 
-        {/* Team validation warning */}
+        {/* Team info notice — neutral/informational style */}
         {registrationType === "team" && formData.teamMembers.length <= 1 && (
-          <div className="mb-6 p-4 rounded-xl border flex items-center gap-3 bg-amber-900/20 text-amber-300 border-amber-500/30">
-            <svg className="flex-shrink-0 h-5 w-5 text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 6a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 6zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+          <div className="mb-6 p-4 rounded-xl border flex items-center gap-3 bg-white/5 text-neutral-300 border-white/10">
+            <svg className="flex-shrink-0 h-5 w-5 text-neutral-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clipRule="evenodd" />
             </svg>
-            <span className="flex-1 text-sm">Teams must have more than one participant. Please add team members below, or switch to Individual registration.</span>
+            <span className="flex-1 text-sm">Teams require at least two participants. You can add team members below or continue as an Individual.</span>
           </div>
         )}
 
