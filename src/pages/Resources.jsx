@@ -325,7 +325,7 @@ export default function Resources() {
                 date: "TBA",
                 time: "TBA",
                 platform: "Zoom",
-                link: "https://alxafrica.zoom.us/webinar/register/WN_8q3IhLq0Tx-xHIbuj5DKoA",
+                link: " https://alxafrica.zoom.us/webinar/register/WN_Eu4xB6UtR-asyLgjhNyBBw",
                 color: "#D4952C",
                 colorEnd: "#b45309",
               },
