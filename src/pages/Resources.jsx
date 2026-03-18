@@ -683,7 +683,7 @@ export default function Resources() {
               <button onClick={() => {window.location.href ='mailto:info@hospitalityhackathon.et';}} className="bg-white text-red-600 font-medium px-6 py-3 rounded-lg hover:bg-neutral-50 transition-colors shadow-lg">
                 Contact Support
               </button>
-              <button onClick={() => window.location.href='https://www.alxafrica.com/ethiopia/'} className="bg-gradient-to-r from-red-600 to-red-900 text-white font-medium px-6 py-3 rounded-lg hover:shadow-xl transition-all shadow-lg">
+              <button onClick={() => window.location.href='https://t.me/HospitalityHackathon2026'} className="bg-gradient-to-r from-red-600 to-red-900 text-white font-medium px-6 py-3 rounded-lg hover:shadow-xl transition-all shadow-lg">
                 Join Our Community
               </button>
 
