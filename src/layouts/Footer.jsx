@@ -64,15 +64,15 @@ function Footer() {
               <div className="text-xs text-neutral-400 space-y-1.5 leading-5">
                 <p>
                   Updated for 2026 by{" "}
-                  <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Bisrat G.</a>
-                  {" "}
-                  <a href="https://github.com/BisratJ" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-neutral-700 transition-colors duration-200 inline-flex align-middle" aria-label="Bisrat GitHub">
-                    <Github className="h-3 w-3" />
-                  </a>
-                  {" "}
-                  <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-600 transition-colors duration-200 inline-flex align-middle" aria-label="Bisrat LinkedIn">
-                    <Linkedin className="h-3 w-3" />
-                  </a>
+                  <span className="inline-flex items-center gap-1 whitespace-nowrap">
+                    <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Bisrat G.</a>
+                    <a href="https://github.com/BisratJ" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-neutral-700 transition-colors duration-200" aria-label="Bisrat GitHub">
+                      <Github className="h-3 w-3" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-600 transition-colors duration-200" aria-label="Bisrat LinkedIn">
+                      <Linkedin className="h-3 w-3" />
+                    </a>
+                  </span>
                 </p>
                 <p>
                   Core design by{" "}
