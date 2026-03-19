@@ -61,25 +61,25 @@ function Footer() {
               </p>
 
               {/* Contributors */}
-              <div className="text-xs text-neutral-400 space-y-2">
-                <p className="flex items-center justify-center gap-1.5 flex-wrap">
-                  <span>Updated for 2026 by</span>
-                  <span className="inline-flex items-center gap-1">
-                    <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Bisrat G.</a>
-                    <a href="https://github.com/BisratJ" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-neutral-700 transition-colors duration-200" aria-label="Bisrat GitHub">
-                      <Github className="h-3 w-3" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-600 transition-colors duration-200" aria-label="Bisrat LinkedIn">
-                      <Linkedin className="h-3 w-3" />
-                    </a>
-                  </span>
+              <div className="text-xs text-neutral-400 space-y-1.5 leading-5">
+                <p>
+                  Updated for 2026 by{" "}
+                  <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Bisrat G.</a>
+                  {" "}
+                  <a href="https://github.com/BisratJ" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-neutral-700 transition-colors duration-200 inline-flex align-middle" aria-label="Bisrat GitHub">
+                    <Github className="h-3 w-3" />
+                  </a>
+                  {" "}
+                  <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-600 transition-colors duration-200 inline-flex align-middle" aria-label="Bisrat LinkedIn">
+                    <Linkedin className="h-3 w-3" />
+                  </a>
                 </p>
-                <p className="flex items-center justify-center gap-1.5 flex-wrap">
-                  <span>Core design by</span>
+                <p>
+                  Core design by{" "}
                   <a href="https://www.linkedin.com/in/abrham28/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Abrham T.</a>
-                  <span className="text-neutral-300">·</span>
+                  {" · "}
                   <a href="https://www.linkedin.com/in/sumeya-akmel-2a3b9b270/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Sumeya A.</a>
-                  <span className="text-neutral-300">·</span>
+                  {" · "}
                   <a href="https://www.linkedin.com/in/yohana-mekuria-90607a2ab/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Yohana M.</a>
                 </p>
               </div>
