@@ -54,17 +54,17 @@ function Footer() {
 
           {/* Divider */}
           <div className="border-t border-neutral-200/60 pt-6 sm:pt-8">
-            <div className="flex flex-col items-center gap-4 sm:gap-6">
+            <div className="flex flex-col items-center gap-4 text-center">
               {/* Copyright */}
-              <p className="text-xs text-neutral-400 text-center">
+              <p className="text-xs text-neutral-400">
                 &copy; {new Date().getFullYear()} Hospitality Hackathon. All rights reserved.
               </p>
 
               {/* Contributors */}
-              <div className="flex flex-col items-center gap-2 sm:gap-1.5 text-xs text-neutral-400 text-center">
-                <div className="flex flex-wrap items-center justify-center gap-1">
+              <div className="text-xs text-neutral-400 space-y-2">
+                <p className="flex items-center justify-center gap-1.5 flex-wrap">
                   <span>Updated for 2026 by</span>
-                  <div className="flex items-center gap-1">
+                  <span className="inline-flex items-center gap-1">
                     <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Bisrat G.</a>
                     <a href="https://github.com/BisratJ" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-neutral-700 transition-colors duration-200" aria-label="Bisrat GitHub">
                       <Github className="h-3 w-3" />
@@ -72,22 +72,20 @@ function Footer() {
                     <a href="https://www.linkedin.com/in/bisratgizaw/" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-600 transition-colors duration-200" aria-label="Bisrat LinkedIn">
                       <Linkedin className="h-3 w-3" />
                     </a>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 mt-1 sm:mt-0">
-                  <span className="whitespace-nowrap">Core design by</span>
-                  <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-                    <a href="https://www.linkedin.com/in/abrham28/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200 whitespace-nowrap">Abrham T.</a>
-                    <span className="text-neutral-300 hidden sm:block">|</span>
-                    <a href="https://www.linkedin.com/in/sumeya-akmel-2a3b9b270/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200 whitespace-nowrap">Sumeya A.</a>
-                    <span className="text-neutral-300 hidden sm:block">|</span>
-                    <a href="https://www.linkedin.com/in/yohana-mekuria-90607a2ab/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200 whitespace-nowrap">Yohana M.</a>
-                  </div>
-                </div>
+                  </span>
+                </p>
+                <p className="flex items-center justify-center gap-1.5 flex-wrap">
+                  <span>Core design by</span>
+                  <a href="https://www.linkedin.com/in/abrham28/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Abrham T.</a>
+                  <span className="text-neutral-300">·</span>
+                  <a href="https://www.linkedin.com/in/sumeya-akmel-2a3b9b270/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Sumeya A.</a>
+                  <span className="text-neutral-300">·</span>
+                  <a href="https://www.linkedin.com/in/yohana-mekuria-90607a2ab/" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-600 hover:text-red-600 transition-colors duration-200">Yohana M.</a>
+                </p>
               </div>
 
               {/* Legal links */}
-              <nav className="flex gap-5 sm:gap-4">
+              <nav className="flex items-center justify-center gap-4">
                 <a href="#" className="text-xs text-neutral-400 hover:text-neutral-600 transition-colors duration-200 py-1">Terms</a>
                 <a href="#" className="text-xs text-neutral-400 hover:text-neutral-600 transition-colors duration-200 py-1">Privacy</a>
                 <a href="#" className="text-xs text-neutral-400 hover:text-neutral-600 transition-colors duration-200 py-1">Code of Conduct</a>

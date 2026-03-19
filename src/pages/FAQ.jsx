@@ -40,7 +40,7 @@ const faqCategories = [
       },
       {
         q: "What dates should I block on my calendar?",
-        a: "Day 1 is Saturday, April 4, 2026 (9 AM – 6 PM) at Capstone ALX Tech Hub in Lideta, and Day 2 is Saturday, April 18, 2026 (8 AM – 5:30 PM) at Kuriftu African Village in Burayu.",
+        a: (<>Day 1 is Saturday, April 4, 2026 (9 AM – 6 PM) at <a href="https://maps.app.goo.gl/pJ1T5Qtf4Tev8yBM9" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline font-medium">Capstone ALX Tech Hub</a> in Lideta, and Day 2 is Saturday, April 18, 2026 (8 AM – 5:30 PM) at Kuriftu African Village in Burayu.</>),
       },
     ],
   },
@@ -72,7 +72,7 @@ const faqCategories = [
     questions: [
       {
         q: "Where does the hackathon take place?",
-        a: "Day 1 is at Capstone ALX Tech Hub in Lideta, Addis Ababa — a modern tech workspace ideal for collaboration. Day 2 is at Kuriftu African Village in Burayu — a stunning resort venue for final presentations and the awards ceremony.",
+        a: (<>Day 1 is at <a href="https://maps.app.goo.gl/pJ1T5Qtf4Tev8yBM9" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline font-medium">Capstone ALX Tech Hub</a> in Lideta, Addis Ababa — a modern tech workspace ideal for collaboration. Day 2 is at Kuriftu African Village in Burayu — a stunning resort venue for final presentations and the awards ceremony.</>),
       },
       {
         q: "What should I bring?",

@@ -170,7 +170,7 @@ export default function Home() {
             <div className="animate-fade-in-up-delay-2 flex flex-col sm:flex-row items-center justify-center gap-3 mb-9">
               {[
                 { icon: <Calendar className="h-3.5 w-3.5 text-red-400" />, text: "April 4 & 18, 2026" },
-                { icon: <MapPin className="h-3.5 w-3.5 text-red-400" />, text: "Capstone ALX Tech Hub & Kuriftu African Village" },
+                { icon: <MapPin className="h-3.5 w-3.5 text-red-400" />, text: "Capstone ALX Tech Hub & Kuriftu African Village", link: "https://maps.app.goo.gl/pJ1T5Qtf4Tev8yBM9" },
               ].map((pill, i) => (
                 <div key={i} className="inline-flex items-center gap-2 px-4 py-2 rounded-full" style={{
                   background: "rgba(255,255,255,0.05)",
@@ -178,7 +178,11 @@ export default function Home() {
                   backdropFilter: "blur(12px)",
                 }}>
                   {pill.icon}
-                  <span className="text-sm font-medium text-white/60">{pill.text}</span>
+                  {pill.link ? (
+                    <a href={pill.link} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-white/60 hover:text-white/90 transition-colors">{pill.text}</a>
+                  ) : (
+                    <span className="text-sm font-medium text-white/60">{pill.text}</span>
+                  )}
                 </div>
               ))}
             </div>
@@ -264,7 +268,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-2 mb-4 text-sm text-neutral-500">
                 <MapPin className="h-3.5 w-3.5 text-neutral-400" />
-                <span className="font-medium text-neutral-700">Capstone ALX Tech Hub</span>
+                <a href="https://maps.app.goo.gl/pJ1T5Qtf4Tev8yBM9" target="_blank" rel="noopener noreferrer" className="font-medium text-neutral-700 hover:text-red-600 transition-colors">Capstone ALX Tech Hub</a>
                 <span className="text-neutral-300">·</span>
                 <span>Lideta, Addis Ababa</span>
               </div>

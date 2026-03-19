@@ -54,7 +54,7 @@ const schedule = {
     location: "Kuriftu African Village",
     address: "Burayu",
     events: [
-      { time: "08:00 – 09:00", title: "Transport Departure", description: "Departure from Capstone ALX Tech Hub to Kuriftu African Village.", category: "travel" },
+      { time: "08:00 – 09:00", title: "Transport Departure", description: (<>Departure from <a href="https://maps.app.goo.gl/pJ1T5Qtf4Tev8yBM9" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline font-medium">Capstone ALX Tech Hub</a> to Kuriftu African Village.</>), category: "travel" },
       { time: "09:00 – 09:30", title: "Arrival & Setup", description: "Arrive at Kuriftu, settle in, and prepare for presentations.", category: "logistics" },
       { time: "09:35 – 12:30", title: "Final Presentations & Q&A", description: "Teams present their solutions to the judging panel, followed by Q&A.", category: "presentation" },
       { time: "12:35 – 13:30", title: "Judging Deliberation", description: "Closed judging session. Participants network and relax.", category: "main" },
@@ -129,7 +129,11 @@ export default function HackathonSchedule() {
               <h3 className="text-lg font-bold text-white">{currentSchedule.date}</h3>
               <div className="flex items-center gap-1.5 text-sm text-white/70 mt-0.5">
                 <MapPin className="h-3.5 w-3.5" />
-                {currentSchedule.location} — {currentSchedule.address}
+                {activeDay === "day1" ? (
+                  <><a href="https://maps.app.goo.gl/pJ1T5Qtf4Tev8yBM9" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-white/30">{currentSchedule.location}</a> — {currentSchedule.address}</>
+                ) : (
+                  <span>{currentSchedule.location} — {currentSchedule.address}</span>
+                )}
               </div>
             </div>
           </div>
