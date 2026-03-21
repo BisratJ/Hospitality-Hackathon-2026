@@ -143,9 +143,10 @@ export default function FAQ() {
   )
 
   const filtered = allQuestions.filter((item) => {
+    const term = searchTerm.toLowerCase()
     const matchesSearch = !searchTerm ||
-      item.q.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.a.toLowerCase().includes(searchTerm.toLowerCase())
+      item.q.toLowerCase().includes(term) ||
+      (typeof item.a === "string" && item.a.toLowerCase().includes(term))
     const matchesCategory = activeCategory === "all" || item.category === activeCategory
     return matchesSearch && matchesCategory
   })
