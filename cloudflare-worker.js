@@ -160,31 +160,47 @@ export default {
 
         let emailErrors = [];
 
+        // Helper: send email with automatic fallback sender
+        const sendEmailWithFallback = async (to, subject, html) => {
+          const senders = [
+            'ALX Hackathon <noreply@hospitalityhackathon.et>',
+            'ALX Hackathon <onboarding@resend.dev>',
+          ];
+          for (const from of senders) {
+            try {
+              const res = await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ from, to: [to], subject, html }),
+              });
+              if (res.ok) return { ok: true };
+              const errText = await res.text();
+              console.error(`Email send failed with sender ${from}:`, errText);
+              // If it's a domain/verification error, try the next sender
+              if (res.status === 403 || errText.includes('domain') || errText.includes('verify')) {
+                continue;
+              }
+              return { ok: false, error: errText };
+            } catch (err) {
+              console.error(`Email send exception with sender ${from}:`, err);
+              continue;
+            }
+          }
+          return { ok: false, error: 'All sender addresses failed' };
+        };
+
         // Send email using Resend
         if (env.RESEND_API_KEY) {
-          try {
-            const emailResponse = await fetch('https://api.resend.com/emails', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                from: 'ALX Hackathon <noreply@hospitalityhackathon.et>',
-                to: [data.email],
-                subject: 'ALX Hackathon Registration Confirmation',
-                html: emailHtml,
-              }),
-            });
-
-            if (!emailResponse.ok) {
-              const errorText = await emailResponse.text();
-              console.error('Failed to send email:', errorText);
-              emailErrors.push({ email: data.email, error: errorText });
-            }
-          } catch (emailErr) {
-            console.error('Email send error:', emailErr);
-            emailErrors.push({ email: data.email, error: emailErr.message });
+          const result = await sendEmailWithFallback(
+            data.email,
+            'ALX Hackathon Registration Confirmation',
+            emailHtml
+          );
+          if (!result.ok) {
+            emailErrors.push({ email: data.email, error: result.error });
           }
         }
 
@@ -289,29 +305,13 @@ export default {
 
               // Send email to team member using Resend
               if (env.RESEND_API_KEY) {
-                try {
-                  const memberEmailResponse = await fetch('https://api.resend.com/emails', {
-                    method: 'POST',
-                    headers: {
-                      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      from: 'ALX Hackathon <noreply@hospitalityhackathon.et>',
-                      to: [member.email],
-                      subject: 'ALX Hackathon Team Registration Confirmation',
-                      html: memberEmailHtml,
-                    }),
-                  });
-
-                  if (!memberEmailResponse.ok) {
-                    const memberErrorText = await memberEmailResponse.text();
-                    console.error('Failed to send team member email:', memberErrorText);
-                    emailErrors.push({ email: member.email, error: memberErrorText });
-                  }
-                } catch (emailErr) {
-                  console.error('Team member email error:', emailErr);
-                  emailErrors.push({ email: member.email, error: emailErr.message });
+                const memberResult = await sendEmailWithFallback(
+                  member.email,
+                  'ALX Hackathon Team Registration Confirmation',
+                  memberEmailHtml
+                );
+                if (!memberResult.ok) {
+                  emailErrors.push({ email: member.email, error: memberResult.error });
                 }
               }
 
