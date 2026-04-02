@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import Bersufekad from '../../../public/assets/images/Bersufekad.jpeg'
+import Otto from '../../../public/assets/images/otto.jpg'
+import Mahlet from '../../../public/assets/images/mahlet.jpg'
 
 const PersonPlaceholder = ({ size = "w-20 h-20", ringClass = "ring-2 ring-neutral-100" }) => (
   <div className={`${size} rounded-full bg-neutral-100 border-2 border-neutral-200 flex items-center justify-center ${ringClass}`}>
@@ -43,17 +44,18 @@ export default function HackathonPeople() {
   ]
 
   const firesideChat = {
+    title: "AI's Role in Modern Hospitality",
     guest: {
-      name: "Bersufekad Getachew Amare",
-      role: "Founder & CEO of Eagle Lion Systems",
-      description: "Founder & CEO of Eagle Lion Systems, Bersufekad Getachew leads a company specializing in innovative technological solutions, contributing to the advancement of the tech industry in Ethiopia.",
-      image: Bersufekad,
-      social: { linkedin: "https://www.linkedin.com/in/bersufekad-getachew-amare-6b61841b4/" },
+      name: "Otto Kurzendorfer",
+      role: "General Manager, Hyatt Regency Addis Ababa",
+      description: "Otto Kurzendorfer is a global hospitality leader with over 30 years of experience managing luxury hotels across Europe, Asia, and the Middle East. Currently the General Manager of Hyatt Regency Addis Ababa, he is a specialist in operational excellence and delivering world-class guest experiences.",
+      image: Otto,
     },
     moderator: {
-      name: "TBD",
-      role: "Moderator",
-      description: "Our moderator will be announced soon. Stay tuned for updates!",
+      name: "Mahlet Tadiwos Salu",
+      role: "Commercial Strategist, Kuriftu Resorts & Spa",
+      description: "Mahlet Tadiwos Salu is a leading hospitality professional and commercial strategist at Ethiopia's renowned Kuriftu Resorts & Spa. With deep expertise in marketing and growth, she is a key figure in driving excellence for the region's premier luxury resort group.",
+      image: Mahlet,
     },
   }
 
@@ -132,15 +134,15 @@ export default function HackathonPeople() {
                   <svg className="h-4 w-4 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2c.9 0 1.8.3 2.5.9l6 5.5c.8.7 1.3 1.7 1.5 2.8l.5 5.3c.2 1.6-.4 3.2-1.5 4.3l-.8.8c-1.1 1.1-2.7 1.6-4.3 1.5l-5.3-.5c-1.1-.2-2.1-.7-2.8-1.5l-5.5-6A3.5 3.5 0 0 1 2 12c0-.9.3-1.8.9-2.5l6-5.5c.7-.6 1.6-.9 2.5-1Z"/><circle cx="10" cy="10" r="1.5"/></svg>
                   <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">Fireside Chat</span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">A Focused Leadership Conversation</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{firesideChat.title}</h3>
                 <p className="text-sm text-white/30 max-w-xl mx-auto">
-                  A 1-on-1 fireside conversation exploring the intersection of technology and hospitality innovation in Ethiopia.
+                  A 1-on-1 fireside conversation exploring the intersection of AI, technology, and hospitality innovation in Ethiopia.
                 </p>
               </div>
 
               {/* Two people — side by side */}
               <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20">
-                {/* Guest — Bersufekad */}
+                {/* Guest — Otto */}
                 <div className="text-center">
                   <div className="relative mx-auto mb-4">
                     <div className="w-28 h-28 rounded-full overflow-hidden ring-4 ring-red-500/20 mx-auto">
@@ -152,16 +154,6 @@ export default function HackathonPeople() {
                   </div>
                   <h4 className="text-lg font-bold text-white mt-2">{firesideChat.guest.name}</h4>
                   <p className="text-sm text-white/40 mt-1">{firesideChat.guest.role}</p>
-                  {firesideChat.guest.social?.linkedin && (
-                    <a href={firesideChat.guest.social.linkedin} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-8 h-8 rounded-full mt-3 text-white/30 hover:text-white/70 transition-colors" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect x="2" y="9" width="4" height="12"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                      </svg>
-                    </a>
-                  )}
                 </div>
 
                 {/* Divider flame */}
@@ -173,11 +165,11 @@ export default function HackathonPeople() {
                   <div className="w-px h-8 bg-white/10"></div>
                 </div>
 
-                {/* Moderator — TBD */}
+                {/* Moderator — Mahlet */}
                 <div className="text-center">
                   <div className="relative mx-auto mb-4">
                     <div className="w-28 h-28 rounded-full ring-4 ring-white/10 mx-auto overflow-hidden">
-                      <DarkPersonPlaceholder />
+                      <img src={firesideChat.moderator.image} alt={firesideChat.moderator.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap" style={{ background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.1)" }}>
                       Moderator
@@ -206,7 +198,9 @@ export default function HackathonPeople() {
             </div>
             <div className="rounded-2xl border border-neutral-200/60 bg-white/60 backdrop-blur-sm p-6">
               <div className="flex items-center gap-3 mb-3">
-                <PersonPlaceholder size="w-10 h-10" ringClass="" />
+                <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                  <img src={firesideChat.moderator.image} alt={firesideChat.moderator.name} className="w-full h-full object-cover" />
+                </div>
                 <div>
                   <div className="text-sm font-semibold text-neutral-900">{firesideChat.moderator.name}</div>
                   <div className="text-xs text-neutral-400">{firesideChat.moderator.role}</div>

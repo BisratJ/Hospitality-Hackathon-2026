@@ -742,6 +742,126 @@ export default {
             { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
+
+        // POST /api/admin/resend-emails — Bulk resend confirmation emails for a date range
+        if (path === '/api/admin/resend-emails' && request.method === 'POST') {
+          const body = await request.json();
+          const startDate = body.startDate || '2026-03-27 20:18:44';
+          const endDate = body.endDate || '2026-04-02 11:29:32';
+          const limit = body.limit || 10;
+          const offset = body.offset || 0;
+
+          if (!env.RESEND_API_KEY) {
+            return new Response(
+              JSON.stringify({ error: 'RESEND_API_KEY not configured' }),
+              { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            );
+          }
+
+          // Helper: send email with automatic fallback sender (same as registration)
+          const sendEmail = async (to, subject, html) => {
+            const senders = [
+              'ALX Hackathon <noreply@hospitalityhackathon.et>',
+              'ALX Hackathon <onboarding@resend.dev>',
+            ];
+            const errors = [];
+            for (const from of senders) {
+              try {
+                const res = await fetch('https://api.resend.com/emails', {
+                  method: 'POST',
+                  headers: {
+                    'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ from, to: [to], subject, html }),
+                });
+                if (res.ok) return { ok: true };
+                const errText = await res.text();
+                errors.push({ from, status: res.status, error: errText });
+                if (res.status === 403 || errText.includes('domain') || errText.includes('verify')) continue;
+                return { ok: false, error: errText };
+              } catch (err) {
+                errors.push({ from, error: err.message || String(err) });
+                continue;
+              }
+            }
+            return { ok: false, error: JSON.stringify(errors) };
+          };
+
+          // Count total affected for pagination info
+          const countResult = await env.DB.prepare(
+            "SELECT COUNT(*) as total FROM users WHERE createdAt > ? AND createdAt < ?"
+          ).bind(startDate, endDate).first();
+          const totalAffected = countResult?.total || 0;
+
+          // Fetch affected users with LIMIT/OFFSET for batching
+          const users = await env.DB.prepare(
+            "SELECT u.*, GROUP_CONCAT(json_object('id', tm.id, 'fullName', tm.fullName, 'email', tm.email, 'phoneNumber', tm.phoneNumber, 'roleType', tm.roleType, 'ticketNumber', tm.ticketNumber)) as teamMembersJson FROM users u LEFT JOIN team_members tm ON u.id = tm.userId WHERE u.createdAt > ? AND u.createdAt < ? GROUP BY u.id ORDER BY u.id LIMIT ? OFFSET ?"
+          ).bind(startDate, endDate, limit, offset).all();
+
+          const affectedUsers = users?.results || [];
+          const results = { total: 0, sent: 0, failed: 0, details: [] };
+
+          for (const user of affectedUsers) {
+            results.total++;
+
+            // Build QR data for lead/individual
+            const qrData = JSON.stringify({
+              ticketNumber: user.ticketNumber,
+              email: user.email,
+              name: user.fullName
+            });
+
+            const emailHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Hospitality Hackathon Registration</title></head><body style="margin:0;padding:0;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.5;background-color:#f5f5f5;"><div style="max-width:520px;margin:0 auto;overflow:hidden;"><div style="background:#0a0a0a;padding:28px 28px 24px;text-align:center;"><img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl.jpg" alt="ALX" style="height:44px;margin-bottom:16px;" /><p style="color:#666;margin:0 0 18px;font-size:10px;text-transform:uppercase;letter-spacing:3px;font-weight:600;">Hospitality Hackathon 2026</p><h1 style="color:#fff;margin:0 0 6px;font-size:22px;font-weight:700;">You're in, ${user.fullName}! 🎉</h1><p style="color:#888;margin:0;font-size:14px;">Your registration has been confirmed</p></div><div style="background:#ffffff;padding:36px 28px;text-align:center;"><div style="border:2px solid #e5e5e5;border-radius:16px;padding:20px;display:inline-block;"><img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=360x360&color=000000&margin=0" alt="QR Code" style="width:360px;height:360px;display:block;"/></div><p style="color:#aaa;font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin:14px 0 0;">Scan at check-in</p></div><div style="padding:0 28px 24px;background:#fff;"><div style="background:linear-gradient(135deg,rgba(240,240,255,0.8) 0%,rgba(250,245,255,0.6) 100%);border:1px solid rgba(200,200,220,0.4);border-radius:16px;padding:0;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);"><div style="padding:14px 20px;border-bottom:1px solid rgba(200,200,220,0.3);"><span style="color:#999;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Ticket Number</span><br/><span style="color:#111;font-size:16px;font-weight:800;font-family:'Courier New',monospace;letter-spacing:1px;">${user.ticketNumber}</span></div><div style="padding:14px 20px;border-bottom:1px solid rgba(200,200,220,0.3);"><span style="color:#999;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Role</span><br/><span style="color:#111;font-size:14px;font-weight:600;">${user.roleType}</span></div>${user.teamName ? `<div style="padding:14px 20px;border-bottom:1px solid rgba(200,200,220,0.3);"><span style="color:#999;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Team</span><br/><span style="color:#111;font-size:14px;font-weight:600;">${user.teamName}</span></div>` : ''}<div style="padding:14px 20px;"><span style="color:#999;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Type</span><br/><span style="color:#111;font-size:14px;font-weight:600;">${user.registrationType === 'team' ? 'Team' : 'Individual'}</span></div></div></div><div style="background:#fff;padding:16px 28px;text-align:center;"><p style="color:#999;font-size:12px;margin:0;">Save your QR code · Join our community · Get ready to innovate</p></div><div style="background:#0a0a0a;padding:14px 28px;text-align:center;"><p style="color:#555;font-size:10px;margin:0;">Hospitality Hackathon 2026 · Addis Ababa · <a href="https://hospitalityhackathon.et" style="color:#777;text-decoration:none;">hospitalityhackathon.et</a></p></div></div></body></html>`;
+
+            const result = await sendEmail(user.email, 'ALX Hackathon Registration Confirmation', emailHtml);
+            if (result.ok) {
+              results.sent++;
+              results.details.push({ email: user.email, name: user.fullName, status: 'sent', type: 'lead' });
+            } else {
+              results.failed++;
+              results.details.push({ email: user.email, name: user.fullName, status: 'failed', error: result.error, type: 'lead' });
+            }
+
+            // Send emails to team members of this user
+            if (user.teamMembersJson) {
+              let members = [];
+              try { members = JSON.parse(`[${user.teamMembersJson}]`); } catch { members = []; }
+
+              for (const member of members) {
+                if (!member.email || !member.fullName) continue;
+                results.total++;
+
+                const memberQrData = JSON.stringify({
+                  ticketNumber: member.ticketNumber,
+                  email: member.email,
+                  name: member.fullName
+                });
+
+                const memberEmailHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Hospitality Hackathon Registration</title></head><body style="margin:0;padding:0;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.5;background-color:#f5f5f5;"><div style="max-width:520px;margin:0 auto;overflow:hidden;"><div style="background:#0a0a0a;padding:28px 28px 24px;text-align:center;"><img src="https://hospitality-hackathon-2026.vercel.app/assets/images/alxl.jpg" alt="ALX" style="height:44px;margin-bottom:16px;" /><p style="color:#666;margin:0 0 18px;font-size:10px;text-transform:uppercase;letter-spacing:3px;font-weight:600;">Hospitality Hackathon 2026</p><h1 style="color:#fff;margin:0 0 6px;font-size:22px;font-weight:700;">Welcome aboard, ${member.fullName}! 🤝</h1><p style="color:#888;margin:0;font-size:14px;">You've been registered as a team member</p></div><div style="background:#ffffff;padding:36px 28px;text-align:center;"><div style="border:2px solid #e5e5e5;border-radius:16px;padding:20px;display:inline-block;"><img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(memberQrData)}&size=360x360&color=000000&margin=0" alt="QR Code" style="width:360px;height:360px;display:block;"/></div><p style="color:#aaa;font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin:14px 0 0;">Scan at check-in</p></div><div style="padding:0 28px 24px;background:#fff;"><div style="background:linear-gradient(135deg,rgba(240,240,255,0.8) 0%,rgba(250,245,255,0.6) 100%);border:1px solid rgba(200,200,220,0.4);border-radius:16px;padding:0;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);"><div style="padding:14px 20px;border-bottom:1px solid rgba(200,200,220,0.3);"><span style="color:#999;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Ticket Number</span><br/><span style="color:#111;font-size:16px;font-weight:800;font-family:'Courier New',monospace;letter-spacing:1px;">${member.ticketNumber}</span></div><div style="padding:14px 20px;border-bottom:1px solid rgba(200,200,220,0.3);"><span style="color:#999;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Role</span><br/><span style="color:#111;font-size:14px;font-weight:600;">${member.roleType}</span></div><div style="padding:14px 20px;"><span style="color:#999;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Team</span><br/><span style="color:#111;font-size:14px;font-weight:600;">${user.teamName}</span></div></div></div><div style="background:#fff;padding:16px 28px;text-align:center;"><p style="color:#999;font-size:12px;margin:0;">Save your QR code · Coordinate with your team · Get ready to innovate</p></div><div style="background:#0a0a0a;padding:14px 28px;text-align:center;"><p style="color:#555;font-size:10px;margin:0;">Hospitality Hackathon 2026 · Addis Ababa · <a href="https://hospitalityhackathon.et" style="color:#777;text-decoration:none;">hospitalityhackathon.et</a></p></div></div></body></html>`;
+
+                const memberResult = await sendEmail(member.email, 'ALX Hackathon Team Registration Confirmation', memberEmailHtml);
+                if (memberResult.ok) {
+                  results.sent++;
+                  results.details.push({ email: member.email, name: member.fullName, status: 'sent', type: 'member' });
+                } else {
+                  results.failed++;
+                  results.details.push({ email: member.email, name: member.fullName, status: 'failed', error: memberResult.error, type: 'member' });
+                }
+              }
+            }
+          }
+
+          return new Response(
+            JSON.stringify({
+              message: `Batch complete: ${results.sent}/${results.total} emails sent successfully`,
+              dateRange: { startDate, endDate },
+              pagination: { limit, offset, totalAffectedLeads: totalAffected, leadsInBatch: affectedUsers.length, hasMore: (offset + limit) < totalAffected, nextOffset: offset + limit },
+              ...results
+            }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
       }
 
       return new Response(
