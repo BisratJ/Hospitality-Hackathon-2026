@@ -141,7 +141,7 @@ export default function HackathonPeople() {
               </div>
 
               {/* Two people — side by side */}
-              <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
                 {/* Guest — Otto */}
                 <div className="text-center">
                   <div className="relative mx-auto mb-4">
